@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: inherit;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: whitesmoke;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+.splide__pagination__page {
+    background-color: rgba(0, 0, 0, 0.25) !important;
+}
+
+.splide__pagination__page.is-active {
+    background-color: #FA812F !important;
+}
+
+.navLinks.active {
+    background-color: white;
+    color: #FA812F;
+}
+
+.customContainer {
+    width: 80%;
+    max-width: 1200px;
+    margin-inline: auto;
+}
+
+@media screen and (max-width: 800px) {
+    .customContainer {
+        width: 85%;
+        max-width: 1200px;
+        margin-inline: auto;
+    }
+}
+
+@media screen and (max-width: 568px) {
+    .customContainer {
+        width: 90%;
+        max-width: 1200px;
+        margin-inline: auto;
+    }
+
+    .customSearchDropdownPosition {
+        top: 52px !important;
+        right: -80px !important;
+    }
+}
