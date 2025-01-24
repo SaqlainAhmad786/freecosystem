@@ -17,6 +17,7 @@
     "country-state-city": "^3.2.1",
     "dotenv": "^16.4.7",
     "lucide-react": "^0.471.1",
+    "rc-slider": "^11.1.8",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^7.1.1",

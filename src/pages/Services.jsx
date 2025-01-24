@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom"
-import { ChevronLeft, ChevronRight, Home } from "lucide-react"
 import Navbar from "../components/Navbar/Navbar"
 import SignupBanner from "../components/SignupBanner/SignupBanner"
 import Footer from "../components/Footer/Footer"
+import { ChevronLeft, ChevronRight, Home } from "lucide-react"
 
 function Services() {
     return (
@@ -38,7 +38,7 @@ function Services() {
                         <p className="text-xs text-gray-500">Showing 1-12 of 100 results</p>
                     </div>
                     <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 place-items-center gap-4 mb-8">
-                        <Link className="bg-white max-w-[320px] inline-block border border-lightOrange rounded-lg overflow-hidden">
+                        <Link to={"/serviceDetail"} className="bg-white max-w-[320px] inline-block border border-lightOrange rounded-lg overflow-hidden">
                             <img src="/images/product1.jpg" className="w-full h-48 object-cover" alt="" />
                             <div className="px-5 py-3">
                                 <h4 className="text-lg font-semibold mb-1">Product Name</h4>
@@ -48,7 +48,7 @@ function Services() {
                             </div>
                             <button className="btn-block bg-lightOrange hover:bg-orange duration-200 text-white font-medium text-sm py-2">Show Interest</button>
                         </Link>
-                        <Link className="bg-white max-w-[320px] inline-block border border-lightOrange rounded-lg overflow-hidden">
+                        <Link to={"/serviceDetail"} className="bg-white max-w-[320px] inline-block border border-lightOrange rounded-lg overflow-hidden">
                             <img src="/images/product1.jpg" className="w-full h-48 object-cover" alt="" />
                             <div className="px-5 py-3">
                                 <h4 className="text-lg font-semibold mb-1">Product Name</h4>
@@ -58,7 +58,7 @@ function Services() {
                             </div>
                             <button className="btn-block bg-lightOrange hover:bg-orange duration-200 text-white font-medium text-sm py-2">Show Interest</button>
                         </Link>
-                        <Link className="bg-white max-w-[320px] inline-block border border-lightOrange rounded-lg overflow-hidden">
+                        <Link to={"/serviceDetail"} className="bg-white max-w-[320px] inline-block border border-lightOrange rounded-lg overflow-hidden">
                             <img src="/images/product1.jpg" className="w-full h-48 object-cover" alt="" />
                             <div className="px-5 py-3">
                                 <h4 className="text-lg font-semibold mb-1">Product Name</h4>
@@ -68,7 +68,7 @@ function Services() {
                             </div>
                             <button className="btn-block bg-lightOrange hover:bg-orange duration-200 text-white font-medium text-sm py-2">Show Interest</button>
                         </Link>
-                        <Link className="bg-white max-w-[320px] inline-block border border-lightOrange rounded-lg overflow-hidden">
+                        <Link to={"/serviceDetail"} className="bg-white max-w-[320px] inline-block border border-lightOrange rounded-lg overflow-hidden">
                             <img src="/images/product1.jpg" className="w-full h-48 object-cover" alt="" />
                             <div className="px-5 py-3">
                                 <h4 className="text-lg font-semibold mb-1">Product Name</h4>
@@ -78,7 +78,27 @@ function Services() {
                             </div>
                             <button className="btn-block bg-lightOrange hover:bg-orange duration-200 text-white font-medium text-sm py-2">Show Interest</button>
                         </Link>
-                        <Link className="bg-white max-w-[320px] inline-block border border-lightOrange rounded-lg overflow-hidden">
+                        <Link to={"/serviceDetail"} className="bg-white max-w-[320px] inline-block border border-lightOrange rounded-lg overflow-hidden">
+                            <img src="/images/product1.jpg" className="w-full h-48 object-cover" alt="" />
+                            <div className="px-5 py-3">
+                                <h4 className="text-lg font-semibold mb-1">Product Name</h4>
+                                <p className="text-sm text-gray-500">Varanasi, UP, India</p>
+                                <p className="text-sm text-gray-500">Qty: 10</p>
+                                <p className="text-sm text-gray-500">Status: <span className="text-green-500">Active</span></p>
+                            </div>
+                            <button className="btn-block bg-lightOrange hover:bg-orange duration-200 text-white font-medium text-sm py-2">Show Interest</button>
+                        </Link>
+                        <Link to={"/serviceDetail"} className="bg-white max-w-[320px] inline-block border border-lightOrange rounded-lg overflow-hidden">
+                            <img src="/images/product1.jpg" className="w-full h-48 object-cover" alt="" />
+                            <div className="px-5 py-3">
+                                <h4 className="text-lg font-semibold mb-1">Product Name</h4>
+                                <p className="text-sm text-gray-500">Varanasi, UP, India</p>
+                                <p className="text-sm text-gray-500">Qty: 10</p>
+                                <p className="text-sm text-gray-500">Status: <span className="text-green-500">Active</span></p>
+                            </div>
+                            <button className="btn-block bg-lightOrange hover:bg-orange duration-200 text-white font-medium text-sm py-2">Show Interest</button>
+                        </Link>
+                        <Link to={"/serviceDetail"} className="bg-white max-w-[320px] inline-block border border-lightOrange rounded-lg overflow-hidden">
                             <img src="/images/product1.jpg" className="w-full h-48 object-cover" alt="" />
                             <div className="px-5 py-3">
                                 <h4 className="text-lg font-semibold mb-1">Product Name</h4>

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom"
-import { Bell, BriefcaseBusiness, ChevronRight, CircleHelp, Gem, House, LifeBuoy, LogOut, Package, Search, User } from "lucide-react"
+import { Bell, BriefcaseBusiness, ChevronDown, ChevronRight, CircleHelp, CirclePlus, Gem, House, LifeBuoy, LogIn, LogOut, Package, Search, User } from "lucide-react"
 import { State } from "country-state-city";
 
 function Navbar() {
@@ -20,7 +20,7 @@ function Navbar() {
 
     return (
         <>
-            <header className="bg-white">
+            <header className="bg-white fixed w-full z-50 shadow-md">
                 <nav className="customContainer navbar px-0 bg-base-100">
                     <div className="navbar-start">
                         <Link to="/">
@@ -29,7 +29,7 @@ function Navbar() {
                     </div>
                     <div className="navbar-end">
                         <div className="dropdown dropdown-end">
-                            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle w-[2.5rem]"><Search className="h-5 w-5" /></div>
+                            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle"><Search className="h-5 w-5" /></div>
                             <div tabIndex={0} className="border dropdown-content menu bg-base-100 rounded-lg z-[1] w-64 p-2 shadow-xl customSearchDropdownPosition">
                                 <form action="">
                                     <label className="form-control w-full max-w-xs">
@@ -56,7 +56,7 @@ function Navbar() {
                         <div className="drawer drawer-end w-auto">
                             <input id="notification-drawer" type="checkbox" className="drawer-toggle" />
                             <div className="drawer-content">
-                                <label htmlFor="notification-drawer" className="btn btn-ghost btn-circle w-[2.5rem] drawer-button">
+                                <label htmlFor="notification-drawer" className="btn btn-ghost btn-circle drawer-button">
                                     <div className="indicator">
                                         <Bell className="h-5 w-5" />
                                         <span className="bg-lightOrange border-lightOrange badge badge-xs badge-primary indicator-item"></span>
@@ -104,9 +104,33 @@ function Navbar() {
                                 </div>
                             </div>
                         </div>
-                        <Link to="/login" className="btn btn-ghost btn-circle w-[2.5rem]">
-                            <User className="h-5 w-5" />
-                        </Link>
+                        {/* <Link to="/postAd" className="btn btn-ghost btn-circle lg:hidden md:hidden sm:hidden flex items-center justify-center"><CirclePlus className="h-5 w-5" /></Link> */}
+                        <span className="lg:inline-flex md:inline-flex sm:inline-flex hidden rounded-md border bg-white shadow-md ml-1">
+                            <Link
+                                to={"/postAd"}
+                                className="flex items-center gap-1 border-e text-sm font-medium px-3 py-2 text-gray-700 hover:bg-gray-50 focus:relative"
+                                title="Post Job"
+                            >
+                                <CirclePlus className="h-4 w-4" />
+                                Post Ad
+                            </Link>
+                            {/* <Link to="/login"
+                                className="flex items-center gap-1 text-sm font-medium px-3 py-2 text-gray-700 hover:bg-gray-50 focus:relative"
+                                title="Login/Signup"
+                            >
+                                <LogIn className="h-4 w-4" />
+                                Login
+                            </Link> */}
+                            <div className="dropdown dropdown-end">
+                                <div tabIndex={0} role="button" className="flex items-center gap-1 text-sm font-medium px-3 py-2 text-gray-700 hover:bg-gray-50 focus:relative"><User className="h-4 w-4" /> John <ChevronDown className="h-4 w-4" /></div>
+                                <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-lg z-[1] w-52 p-2 shadow-md">
+                                    <li><Link>Profile</Link></li>
+                                    <li><Link>Your Interests</Link></li>
+                                    <li><Link>Your Posts</Link></li>
+                                    <li><Link>Logout</Link></li>
+                                </ul>
+                            </div>
+                        </span>
                         <div className="drawer w-auto lg:hidden md:hidden sm:hidden block">
                             <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
                             <div className="drawer-content">

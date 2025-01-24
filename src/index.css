@@ -29,6 +29,10 @@ input[type=number] {
     -moz-appearance: textfield;
 }
 
+main {
+    padding-top: 110px;
+}
+
 .splide__pagination__page {
     background-color: rgba(0, 0, 0, 0.25) !important;
 }
@@ -42,6 +46,14 @@ input[type=number] {
     color: #FA812F;
 }
 
+.bottomNavbar a {
+    transition: all 0.2s ease-in-out;
+}
+
+.bottomNavbar a.active {
+    color: #FA812F !important;
+}
+
 .customContainer {
     width: 80%;
     max-width: 1200px;
@@ -53,6 +65,12 @@ input[type=number] {
         width: 85%;
         max-width: 1200px;
         margin-inline: auto;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    main {
+        padding-top: 80px;
     }
 }
 

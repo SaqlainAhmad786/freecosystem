@@ -7,11 +7,11 @@ function Login() {
 
     return (
         <>
-            <main>
-                <section className="relative flex flex-wrap lg:h-screen lg:items-center">
+            <section>
+                <div className="relative flex flex-wrap lg:h-screen lg:items-center">
                     <div className="w-full px-4 py-12 sm:px-6 sm:py-16 lg:w-1/2 lg:px-8 lg:py-24">
                         <div className="mx-auto max-w-lg flex flex-col justify-center gap-2">
-                            <img src="/images/favicon.svg" className="h-12" alt="" />
+                            <img src="/images/logo2.svg" className="h-12" alt="" />
                             <h1 className="text-2xl font-bold sm:text-3xl text-center">Login!</h1>
                         </div>
                         <form action="#" className="mx-auto mb-0 mt-8 max-w-md space-y-4">
@@ -71,8 +71,8 @@ function Login() {
                             className="absolute inset-0 h-full w-full object-cover"
                         />
                     </div>
-                </section>
-            </main>
+                </div>
+            </section>
         </>
     )
 }
