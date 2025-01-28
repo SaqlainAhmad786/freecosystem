@@ -12,6 +12,12 @@ import ServiceDetail from "./pages/ServiceDetail"
 import JobDetails from "./pages/JobDetails"
 import MatrimonyProfile from "./pages/MatrimonyProfile"
 import PostAd from "./pages/PostAd"
+import Profile from "./pages/Profile"
+import YourAds from "./pages/YourAds"
+import EditProduct from "./components/EditProduct/EditProduct"
+import EditService from "./components/EditService/EditService"
+import EditJob from "./components/EditJob/EditJob"
+import Interests from "./pages/Interests"
 
 function App() {
 
@@ -19,19 +25,25 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />}></Route>
-          <Route path="/login" element={<Login />}></Route>
-          <Route path="/signup" element={<Signup />}></Route>
-          <Route path="/products" element={<Products />}></Route>
-          <Route path="/productDetail" element={<ProductDetail />}></Route>
-          <Route path="/services" element={<Services />}></Route>
-          <Route path="/serviceDetail" element={<ServiceDetail />}></Route>
-          <Route path="/jobs" element={<Jobs />}></Route>
-          <Route path="/jobDetail" element={<JobDetails />}></Route>
-          <Route path="/matrimony" element={<Matrimony />}></Route>
-          <Route path="/matrimonyProfile" element={<MatrimonyProfile />}></Route>
-          <Route path="/postAd" element={<PostAd />}></Route>
-          <Route path="*" element={<Page404 />}></Route>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/productDetail" element={<ProductDetail />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/serviceDetail" element={<ServiceDetail />} />
+          <Route path="/jobs" element={<Jobs />} />
+          <Route path="/jobDetail" element={<JobDetails />} />
+          <Route path="/matrimony" element={<Matrimony />} />
+          <Route path="/matrimonyProfile" element={<MatrimonyProfile />} />
+          <Route path="/postAd" element={<PostAd />} />
+          <Route path="/ads" element={<YourAds />} />
+          <Route path="/interests" element={<Interests />} />
+          <Route path="/editProduct" element={<EditProduct />} />
+          <Route path="/editService" element={<EditService />} />
+          <Route path="/editJob" element={<EditJob />} />
+          <Route path="*" element={<Page404 />} />
         </Routes>
       </BrowserRouter>
     </>

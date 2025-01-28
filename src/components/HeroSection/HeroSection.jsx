@@ -20,8 +20,8 @@ function HeroSection() {
                         </h1>
                         <p className="mt-4 mb-8 text-sm text-gray-500 sm:mb-12" data-aos="fade-right" data-aos-delay="1400" data-aos-duration="1000" data-aos-once>Help those in need by donating items you no longer use.</p>
                         <div className="flex flex-col space-y-4 sm:items-center sm:justify-center sm:flex-row sm:space-y-0 sm:space-x-4 lg:justify-start">
-                            <Link rel="noopener noreferrer" href="#" className="px-8 py-3 text-lg font-semibold rounded bg-lightOrange text-white" data-aos="fade-up" data-aos-delay="1600" data-aos-duration="1000" data-aos-once>Post Ad</Link>
-                            <Link rel="noopener noreferrer" href="#" className="px-8 py-3 text-lg font-semibold border rounded border-gray-300" data-aos="fade-up" data-aos-delay="2000" data-aos-duration="1000" data-aos-once>Contact us</Link>
+                            <Link to="/postAd" className="px-8 py-3 text-lg font-semibold rounded bg-lightOrange text-white" data-aos="fade-up" data-aos-delay="1600" data-aos-duration="1000" data-aos-once>Post Ad</Link>
+                            <Link to="/post-ad" className="px-8 py-3 text-lg font-semibold border rounded border-gray-300" data-aos="fade-up" data-aos-delay="2000" data-aos-duration="1000" data-aos-once>Contact us</Link>
                         </div>
                     </div>
                     <div className="flex items-center justify-center p-6 mt-8 lg:mt-0 h-40 sm:h-80 lg:h-96 xl:h-112 2xl:h-128" data-aos="zoom-in" data-aos-delay="200" data-aos-duration="1000" data-aos-once>

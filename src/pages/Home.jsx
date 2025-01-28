@@ -416,6 +416,29 @@ function Home() {
                         <Link to={''} className="border px-3 py-2 border-gray-500 rounded-lg hover:bg-black hover:text-white duration-200 inline-block mt-5">View all...</Link>
                     </div>
                 </section>
+                <section className="customContainer my-10">
+                    <div className="collapse collapse-plus bg-white border mb-1">
+                        <input type="radio" name="my-accordion-3" defaultChecked />
+                        <div className="collapse-title text-xl font-medium">Click to open this one and close others</div>
+                        <div className="collapse-content">
+                            <p>hello</p>
+                        </div>
+                    </div>
+                    <div className="collapse collapse-plus bg-white border mb-1">
+                        <input type="radio" name="my-accordion-3" />
+                        <div className="collapse-title text-xl font-medium">Click to open this one and close others</div>
+                        <div className="collapse-content">
+                            <p>hello</p>
+                        </div>
+                    </div>
+                    <div className="collapse collapse-plus bg-white border mb-1">
+                        <input type="radio" name="my-accordion-3" />
+                        <div className="collapse-title text-xl font-medium">Click to open this one and close others</div>
+                        <div className="collapse-content">
+                            <p>hello</p>
+                        </div>
+                    </div>
+                </section>
                 <SignupBanner />
                 <Footer />
             </main>

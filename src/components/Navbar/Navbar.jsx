@@ -104,7 +104,9 @@ function Navbar() {
                                 </div>
                             </div>
                         </div>
-                        {/* <Link to="/postAd" className="btn btn-ghost btn-circle lg:hidden md:hidden sm:hidden flex items-center justify-center"><CirclePlus className="h-5 w-5" /></Link> */}
+                        <div>
+                            <Link to="/postAd" className="lg:hidden md:hidden sm:hidden px-2"><CirclePlus className="h-5 inline-block" /></Link>
+                        </div>
                         <span className="lg:inline-flex md:inline-flex sm:inline-flex hidden rounded-md border bg-white shadow-md ml-1">
                             <Link
                                 to={"/postAd"}
@@ -124,9 +126,9 @@ function Navbar() {
                             <div className="dropdown dropdown-end">
                                 <div tabIndex={0} role="button" className="flex items-center gap-1 text-sm font-medium px-3 py-2 text-gray-700 hover:bg-gray-50 focus:relative"><User className="h-4 w-4" /> John <ChevronDown className="h-4 w-4" /></div>
                                 <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-lg z-[1] w-52 p-2 shadow-md">
-                                    <li><Link>Profile</Link></li>
-                                    <li><Link>Your Interests</Link></li>
-                                    <li><Link>Your Posts</Link></li>
+                                    <li><Link to="/profile">Profile</Link></li>
+                                    <li><Link to="/interests">Your Interests</Link></li>
+                                    <li><Link to="/ads">Your Ads</Link></li>
                                     <li><Link>Logout</Link></li>
                                 </ul>
                             </div>
