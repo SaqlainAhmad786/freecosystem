@@ -1,8 +1,11 @@
 import { Lock, Save } from "lucide-react"
 import Footer from "../components/Footer/Footer"
 import Navbar from "../components/Navbar/Navbar"
+import { useAuth } from "../contexts/authContext"
 
 function Profile() {
+    const { userData } = useAuth()
+
     return (
         <>
             <Navbar />

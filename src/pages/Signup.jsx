@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { ALargeSmall, Eye, EyeClosed, Mail, MapPin, Smartphone } from "lucide-react"
 import { City, State } from "country-state-city"
+import axios from "axios"
+import { toast, Toaster } from "sonner"
 
 function Signup() {
     const [showPassword, setShowPassword] = useState(false)
     const [showConfirmPassword, setShowConfirmPassword] = useState(false)
     const [states, setStates] = useState([])
     const [cities, setCities] = useState([])
+    const navigate = useNavigate()
 
     useEffect(() => {
         const fetchStates = () => {
@@ -29,9 +32,31 @@ function Signup() {
         setCities(citiesList);
     };
 
+    async function handleSubmit(e) {
+        e.preventDefault()
+        const formData = new FormData(e.target)
+        const data = Object.fromEntries(formData)
+
+        try {
+            await axios.post(`${import.meta.env.VITE_BASE_URL}/auth/register`, data).then(res => {
+                console.log(res);
+                if (res.data.success) {
+                    toast.success(res.data.message)
+                    navigate('/verifyOtp', { state: { userId: res.data.userId, otp: res.data.otp } })
+                }
+            })
+        } catch (error) {
+            if (!error.response.data.success) {
+                toast.error(error.response.data.message, { description: 'Please try with different email.' })
+            }
+            console.log(error);
+        }
+    }
+
     return (
         <>
             <section>
+                <Toaster position="top-right" richColors />
                 <div className="relative flex flex-wrap lg:h-screen lg:items-center">
                     <div className="relative h-64 w-full sm:h-96 lg:h-full lg:w-1/2">
                         <img
@@ -45,7 +70,7 @@ function Signup() {
                             <img src="/images/logo2.svg" className="h-12" alt="" />
                             <h1 className="text-2xl font-bold sm:text-3xl text-center">Signup!</h1>
                         </div>
-                        <form action="#" className="mx-auto mb-0 mt-8 max-w-lg space-y-4">
+                        <form className="mx-auto mb-0 mt-8 max-w-lg space-y-4" onSubmit={(e) => handleSubmit(e)}>
                             <div className="grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 gap-4">
                                 <div>
                                     <label htmlFor="firstName" className="sr-only">First Name</label>
@@ -98,7 +123,7 @@ function Signup() {
                                             type="number"
                                             className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm outline-none focus:ring-1 ring-lightOrange duration-200"
                                             placeholder="Enter mobile number"
-                                            name="mobile"
+                                            name="phoneNumber"
                                         />
                                         <span className="absolute inset-y-0 end-0 grid place-content-center px-4">
                                             <Smartphone className="h-4 w-4 text-gray-400" />
@@ -110,11 +135,11 @@ function Signup() {
                                 <div>
                                     <label htmlFor="gender" className="sr-only">Gender</label>
                                     <div className="relative">
-                                        <select name="gender" id="" className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm outline-none focus:ring-1 ring-lightOrange duration-200">
+                                        <select name="gender" id="gender" className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm outline-none focus:ring-1 ring-lightOrange duration-200">
                                             <option value="0" hidden>Select Gender</option>
-                                            <option value="male">Male</option>
-                                            <option value="female">Female</option>
-                                            <option value="other">Other</option>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                            <option value="Other">Other</option>
                                         </select>
                                     </div>
                                 </div>
@@ -137,7 +162,7 @@ function Signup() {
                                 <div>
                                     <label htmlFor="state" className="sr-only">State</label>
                                     <div className="relative">
-                                        <select name="state" id="" className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm outline-none focus:ring-1 ring-lightOrange duration-200" onChange={(e) => handleStateChange(e)}>
+                                        <select name="state" id="state" className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm outline-none focus:ring-1 ring-lightOrange duration-200" onChange={(e) => handleStateChange(e)}>
                                             <option hidden>Select State</option>
                                             {states.map((state, index) => (
                                                 <option key={index} value={state.name}>{state.name}</option>
@@ -148,7 +173,7 @@ function Signup() {
                                 <div>
                                     <label htmlFor="city" className="sr-only">City</label>
                                     <div className="relative">
-                                        <select name="city" id="" className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm outline-none focus:ring-1 ring-lightOrange duration-200" disabled={cities.length < 1}>
+                                        <select name="city" id="city" className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm outline-none focus:ring-1 ring-lightOrange duration-200" disabled={cities.length < 1}>
                                             <option hidden>Select City</option>
                                             {cities.length > 1 && cities.map((city, index) => (
                                                 <option key={index} value={city.name}>{city.name}</option>
@@ -191,7 +216,7 @@ function Signup() {
                             <div className="flex items-center justify-between">
                                 <p className="text-sm text-gray-500">
                                     Already have account?
-                                    <Link to={"/login"} className="underline ml-1 text-lightOrange" href="#">Login</Link>
+                                    <Link to={"/login"} className="underline ml-1 text-lightOrange">Login</Link>
                                 </p>
 
                                 <button

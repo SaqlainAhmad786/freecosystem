@@ -1,11 +1,30 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Splide, SplideSlide } from "@splidejs/react-splide"
-import Footer from "../components/Footer/Footer"
 import Navbar from "../components/Navbar/Navbar"
+import Footer from "../components/Footer/Footer"
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 function ProductDetail() {
+    const [productData, setProductData] = useState({});
     const mainSliderRef = useRef(null);
     const thumbSliderRef = useRef(null);
+
+    const { id } = useParams();
+
+    useEffect(() => {
+        async function getProduct() {
+            try {
+                const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/listings/product/${id}`)
+                if (res.status === 200) {
+                    setProductData(res.data.data);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        getProduct()
+    })
 
     const options = {
         type: 'fade',
@@ -74,24 +93,24 @@ function ProductDetail() {
                         </Splide>
                     </div>
                     <div className="space-y-2 lg:p-5 md:p-5 p-2">
-                        <p className="text-sm text-gray-500">Ad Id: <span className="font-semibold">123456</span></p>
-                        <h1 className="text-xl font-semibold">Product Name</h1>
+                        <p className="text-sm text-gray-500">Ad Id: <span className="font-semibold">{id}</span></p>
+                        <h1 className="text-xl font-semibold">{productData.title}</h1>
                         <div>
                             <p className="text-xs font-medium text-gray-500">Description</p>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam modi incidunt voluptatibus maxime ad, magnam laboriosam sapiente a nam fugit, iste similique nobis. Earum, excepturi!</p>
+                            <p>{productData.description}</p>
                         </div>
                         <ul className="list-disc list-outside grid grid-cols-2 pl-4 place-content-center">
                             <li>
                                 <p className="text-xs font-medium text-gray-500">Pincode</p>
-                                <p>111111</p>
+                                <p>{productData.pincode}</p>
                             </li>
                             <li>
                                 <p className="text-xs font-medium text-gray-500">City</p>
-                                <p>Varanasi</p>
+                                <p>{productData.city}</p>
                             </li>
                             <li>
                                 <p className="text-xs font-medium text-gray-500">State</p>
-                                <p>Uttar Pradesh</p>
+                                <p>{productData.state}</p>
                             </li>
                             <li>
                                 <p className="text-xs font-medium text-gray-500">Country</p>
@@ -106,11 +125,11 @@ function ProductDetail() {
                             </li>
                             <li>
                                 <p className="text-sm text-gray-500">Sub-Category</p>
-                                <p>Accessories</p>
+                                <p>{productData.category}</p>
                             </li>
                             <li>
                                 <p className="text-sm text-gray-500">Quantity</p>
-                                <p>1</p>
+                                <p>{productData.quantity}</p>
                             </li>
                         </ul>
                         <div>

@@ -1,11 +1,30 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Footer from "../components/Footer/Footer";
 import Navbar from "../components/Navbar/Navbar";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 function ServiceDetail() {
+    const [serviceData, setServiceData] = useState({});
     const mainSliderRef = useRef(null);
     const thumbSliderRef = useRef(null);
+
+    const { id } = useParams();
+
+    useEffect(() => {
+        async function getService() {
+            try {
+                const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/listings/product/${id}`)
+                if (res.status === 200) {
+                    setServiceData(res.data.data);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        getService()
+    })
 
     const options = {
         type: 'fade',

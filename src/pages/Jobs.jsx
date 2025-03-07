@@ -3,8 +3,11 @@ import Navbar from "../components/Navbar/Navbar"
 import { ChevronLeft, ChevronRight, Home } from "lucide-react"
 import SignupBanner from "../components/SignupBanner/SignupBanner"
 import Footer from "../components/Footer/Footer"
+import { useAuth } from "../contexts/authContext"
 
 function Jobs() {
+    const { jobsList } = useAuth()
+
     return (
         <>
             <Navbar />
@@ -37,77 +40,22 @@ function Jobs() {
                         <h2 className="text-xl font-semibold">Jobs near you</h2>
                         <p className="text-xs text-gray-500">Showing 1-12 of 100 results</p>
                     </div>
-                    <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 place-items-center gap-4 mb-8">
-                        <Link to={"/jobDetail"} className="w-72 bg-white inline-block border border-lightOrange rounded-lg overflow-hidden">
-                            <div className="px-5 py-3">
-                                <h4 className="text-xl font-semibold mb-1">Web Developer</h4>
-                                <p className="text-sm text-gray-500">Varanasi, UP, India</p>
-                                <p className="text-sm text-gray-500">Positions: 1</p>
-                                <p className="text-md text-gray-700 font-medium mt-1">Dizi Global Solutions</p>
-                                <p className="text-sm text-gray-500">Status: <span className="text-green-500">Active</span></p>
-                            </div>
-                            <button className="btn-block bg-lightOrange hover:bg-orange duration-200 text-white font-medium text-sm py-2">Read more</button>
-                        </Link>
-                        <Link to={"/jobDetail"} className="w-72 bg-white inline-block border border-lightOrange rounded-lg overflow-hidden">
-                            <div className="px-5 py-3">
-                                <h4 className="text-xl font-semibold mb-1">Web Developer</h4>
-                                <p className="text-sm text-gray-500">Varanasi, UP, India</p>
-                                <p className="text-sm text-gray-500">Positions: 1</p>
-                                <p className="text-md text-gray-700 font-medium mt-1">Dizi Global Solutions</p>
-                                <p className="text-sm text-gray-500">Status: <span className="text-green-500">Active</span></p>
-                            </div>
-                            <button className="btn-block bg-lightOrange hover:bg-orange duration-200 text-white font-medium text-sm py-2">Read more</button>
-                        </Link>
-                        <Link to={"/jobDetail"} className="w-72 bg-white inline-block border border-lightOrange rounded-lg overflow-hidden">
-                            <div className="px-5 py-3">
-                                <h4 className="text-xl font-semibold mb-1">Web Developer</h4>
-                                <p className="text-sm text-gray-500">Varanasi, UP, India</p>
-                                <p className="text-sm text-gray-500">Positions: 1</p>
-                                <p className="text-md text-gray-700 font-medium mt-1">Dizi Global Solutions</p>
-                                <p className="text-sm text-gray-500">Status: <span className="text-green-500">Active</span></p>
-                            </div>
-                            <button className="btn-block bg-lightOrange hover:bg-orange duration-200 text-white font-medium text-sm py-2">Read more</button>
-                        </Link>
-                        <Link to={"/jobDetail"} className="w-72 bg-white inline-block border border-lightOrange rounded-lg overflow-hidden">
-                            <div className="px-5 py-3">
-                                <h4 className="text-xl font-semibold mb-1">Web Developer</h4>
-                                <p className="text-sm text-gray-500">Varanasi, UP, India</p>
-                                <p className="text-sm text-gray-500">Positions: 1</p>
-                                <p className="text-md text-gray-700 font-medium mt-1">Dizi Global Solutions</p>
-                                <p className="text-sm text-gray-500">Status: <span className="text-green-500">Active</span></p>
-                            </div>
-                            <button className="btn-block bg-lightOrange hover:bg-orange duration-200 text-white font-medium text-sm py-2">Read more</button>
-                        </Link>
-                        <Link to={"/jobDetail"} className="w-72 bg-white inline-block border border-lightOrange rounded-lg overflow-hidden">
-                            <div className="px-5 py-3">
-                                <h4 className="text-xl font-semibold mb-1">Web Developer</h4>
-                                <p className="text-sm text-gray-500">Varanasi, UP, India</p>
-                                <p className="text-sm text-gray-500">Positions: 1</p>
-                                <p className="text-md text-gray-700 font-medium mt-1">Dizi Global Solutions</p>
-                                <p className="text-sm text-gray-500">Status: <span className="text-green-500">Active</span></p>
-                            </div>
-                            <button className="btn-block bg-lightOrange hover:bg-orange duration-200 text-white font-medium text-sm py-2">Read more</button>
-                        </Link>
-                        <Link to={"/jobDetail"} className="w-72 bg-white inline-block border border-lightOrange rounded-lg overflow-hidden">
-                            <div className="px-5 py-3">
-                                <h4 className="text-xl font-semibold mb-1">Web Developer</h4>
-                                <p className="text-sm text-gray-500">Varanasi, UP, India</p>
-                                <p className="text-sm text-gray-500">Positions: 1</p>
-                                <p className="text-md text-gray-700 font-medium mt-1">Dizi Global Solutions</p>
-                                <p className="text-sm text-gray-500">Status: <span className="text-green-500">Active</span></p>
-                            </div>
-                            <button className="btn-block bg-lightOrange hover:bg-orange duration-200 text-white font-medium text-sm py-2">Read more</button>
-                        </Link>
-                        <Link to={"/jobDetail"} className="w-72 bg-white inline-block border border-lightOrange rounded-lg overflow-hidden">
-                            <div className="px-5 py-3">
-                                <h4 className="text-xl font-semibold mb-1">Web Developer</h4>
-                                <p className="text-sm text-gray-500">Varanasi, UP, India</p>
-                                <p className="text-sm text-gray-500">Positions: 1</p>
-                                <p className="text-md text-gray-700 font-medium mt-1">Dizi Global Solutions</p>
-                                <p className="text-sm text-gray-500">Status: <span className="text-green-500">Active</span></p>
-                            </div>
-                            <button className="btn-block bg-lightOrange hover:bg-orange duration-200 text-white font-medium text-sm py-2">Read more</button>
-                        </Link>
+                    <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 place-items-center gap-4 mb-8">
+                        {jobsList.map((job, index) => {
+                            return (
+                                <Link key={index} to={`/jobDetail/${job._id}`} className="w-72 bg-white inline-block border border-lightOrange rounded-lg overflow-hidden">
+                                    <div className="px-5 py-3">
+                                        <h4 className="text-xl font-semibold mb-1">Web Developer</h4>
+                                        <p className="text-sm text-gray-500">Varanasi, UP, India</p>
+                                        <p className="text-sm text-gray-500">Positions: 1</p>
+                                        <p className="text-md text-gray-700 font-medium mt-1">Dizi Global Solutions</p>
+                                        <p className="text-sm text-gray-500">Status: <span className="text-green-500">Active</span></p>
+                                    </div>
+                                    <button className="btn-block bg-lightOrange hover:bg-orange duration-200 text-white font-medium text-sm py-2">Read more</button>
+                                </Link>
+                            )
+                        })}
+
                     </div>
                     <div className="flex justify-center">
                         <div className="inline-flex justify-center gap-1">

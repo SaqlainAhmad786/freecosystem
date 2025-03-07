@@ -1,20 +1,48 @@
 import { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { Eye, EyeClosed, Home, Mail } from "lucide-react"
+import { toast, Toaster } from "sonner"
+import axios from "axios"
+import { useAuth } from "../contexts/authContext"
 
 function Login() {
+    const { getUserData } = useAuth()
     const [showPassword, setShowPassword] = useState(false)
+    const navigate = useNavigate()
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        const formData = new FormData(e.target)
+        const email = formData.get("email")
+        const password = formData.get("password")
+
+        try {
+            const res = await axios.post(`${import.meta.env.VITE_BASE_URL}/auth/login`, { email, password })
+            console.log(res)
+            if (res.status == 200) {
+                localStorage.setItem('token', res.data.token)
+                getUserData(res.data.token)
+                navigate('/')
+            }
+        } catch (error) {
+            console.log(error);
+            if (error.response.status === 401) {
+                toast.error(error.response.data.message)
+            }
+        }
+    }
 
     return (
         <>
             <section>
+                <Toaster position="top-right" richColors />
                 <div className="relative flex flex-wrap lg:h-screen lg:items-center">
                     <div className="w-full px-4 py-12 sm:px-6 sm:py-16 lg:w-1/2 lg:px-8 lg:py-24">
                         <div className="mx-auto max-w-lg flex flex-col justify-center gap-2">
                             <img src="/images/logo2.svg" className="h-12" alt="" />
                             <h1 className="text-2xl font-bold sm:text-3xl text-center">Login!</h1>
                         </div>
-                        <form action="#" className="mx-auto mb-0 mt-8 max-w-md space-y-4">
+                        <form className="mx-auto mb-0 mt-8 max-w-md space-y-4" onSubmit={(e) => handleSubmit(e)}>
                             <div>
                                 <label htmlFor="email" className="sr-only">Email</label>
 
@@ -38,6 +66,7 @@ function Login() {
                                     <input
                                         type={showPassword ? "text" : "password"}
                                         className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm outline-none focus:ring-1 ring-lightOrange duration-200"
+                                        name="password"
                                         placeholder="Enter password"
                                     />
 

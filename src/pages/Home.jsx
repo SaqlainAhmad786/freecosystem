@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../contexts/authContext";
 import HeroSection from "../components/HeroSection/HeroSection"
 import Navbar from "../components/Navbar/Navbar"
 import SignupBanner from "../components/SignupBanner/SignupBanner"
@@ -8,9 +9,10 @@ import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
 import Aos from "aos";
 import "aos/dist/aos.css";
-// import { AutoScroll } from '@splidejs/splide-extension-auto-scroll';
 
 function Home() {
+    const { productsList, servicesList, jobsList } = useAuth()
+
     useEffect(() => {
         Aos.init()
     })
@@ -118,78 +120,23 @@ function Home() {
                     <h3 className="text-4xl font-bold text-center mb-5">Latest Product Ads</h3>
                     <div>
                         <Splide aria-label="products slides" options={options} className="pb-8">
-                            <SplideSlide className="flex justify-center items-center">
-                                <Link className="bg-white inline-block border border-lightOrange rounded-lg overflow-hidden">
-                                    <img src="/images/product1.jpg" className="w-full h-48 object-cover" alt="" />
-                                    <div className="px-5 py-3">
-                                        <h4 className="text-lg font-semibold mb-1">Product Name</h4>
-                                        <p className="text-sm text-gray-500">Varanasi, UP, India</p>
-                                        <p className="text-sm text-gray-500">Qty: 10</p>
-                                        <p className="text-sm text-gray-500">Status: <span className="text-green-500">Active</span></p>
-                                    </div>
-                                    <button className="btn-block bg-lightOrange hover:bg-orange duration-200 text-white font-medium text-sm py-2">Show Interest</button>
-                                </Link>
-                            </SplideSlide>
-                            <SplideSlide className="flex justify-center items-center">
-                                <Link className="bg-white inline-block border border-lightOrange rounded-lg overflow-hidden">
-                                    <img src="/images/product1.jpg" className="w-full h-48 object-cover" alt="" />
-                                    <div className="px-5 py-3">
-                                        <h4 className="text-lg font-semibold mb-1">Product Name</h4>
-                                        <p className="text-sm text-gray-500">Varanasi, UP, India</p>
-                                        <p className="text-sm text-gray-500">Qty: 10</p>
-                                        <p className="text-sm text-gray-500">Status: <span className="text-green-500">Active</span></p>
-                                    </div>
-                                    <button className="btn-block bg-lightOrange hover:bg-orange duration-200 text-white font-medium text-sm py-2">Show Interest</button>
-                                </Link>
-                            </SplideSlide>
-                            <SplideSlide className="flex justify-center items-center">
-                                <Link className="bg-white inline-block border border-lightOrange rounded-lg overflow-hidden">
-                                    <img src="/images/product1.jpg" className="w-full h-48 object-cover" alt="" />
-                                    <div className="px-5 py-3">
-                                        <h4 className="text-lg font-semibold mb-1">Product Name</h4>
-                                        <p className="text-sm text-gray-500">Varanasi, UP, India</p>
-                                        <p className="text-sm text-gray-500">Qty: 10</p>
-                                        <p className="text-sm text-gray-500">Status: <span className="text-green-500">Active</span></p>
-                                    </div>
-                                    <button className="btn-block bg-lightOrange hover:bg-orange duration-200 text-white font-medium text-sm py-2">Show Interest</button>
-                                </Link>
-                            </SplideSlide>
-                            <SplideSlide className="flex justify-center items-center">
-                                <Link className="bg-white inline-block border border-lightOrange rounded-lg overflow-hidden">
-                                    <img src="/images/product1.jpg" className="w-full h-48 object-cover" alt="" />
-                                    <div className="px-5 py-3">
-                                        <h4 className="text-lg font-semibold mb-1">Product Name</h4>
-                                        <p className="text-sm text-gray-500">Varanasi, UP, India</p>
-                                        <p className="text-sm text-gray-500">Qty: 10</p>
-                                        <p className="text-sm text-gray-500">Status: <span className="text-green-500">Active</span></p>
-                                    </div>
-                                    <button className="btn-block bg-lightOrange hover:bg-orange duration-200 text-white font-medium text-sm py-2">Show Interest</button>
-                                </Link>
-                            </SplideSlide>
-                            <SplideSlide className="flex justify-center items-center">
-                                <Link className="bg-white inline-block border border-lightOrange rounded-lg overflow-hidden">
-                                    <img src="/images/product1.jpg" className="w-full h-48 object-cover" alt="" />
-                                    <div className="px-5 py-3">
-                                        <h4 className="text-lg font-semibold mb-1">Product Name</h4>
-                                        <p className="text-sm text-gray-500">Varanasi, UP, India</p>
-                                        <p className="text-sm text-gray-500">Qty: 10</p>
-                                        <p className="text-sm text-gray-500">Status: <span className="text-green-500">Active</span></p>
-                                    </div>
-                                    <button className="btn-block bg-lightOrange hover:bg-orange duration-200 text-white font-medium text-sm py-2">Show Interest</button>
-                                </Link>
-                            </SplideSlide>
-                            <SplideSlide className="flex justify-center items-center">
-                                <Link className="bg-white inline-block border border-lightOrange rounded-lg overflow-hidden">
-                                    <img src="/images/product1.jpg" className="w-full h-48 object-cover" alt="" />
-                                    <div className="px-5 py-3">
-                                        <h4 className="text-lg font-semibold mb-1">Product Name</h4>
-                                        <p className="text-sm text-gray-500">Varanasi, UP, India</p>
-                                        <p className="text-sm text-gray-500">Qty: 10</p>
-                                        <p className="text-sm text-gray-500">Status: <span className="text-green-500">Active</span></p>
-                                    </div>
-                                    <button className="btn-block bg-lightOrange hover:bg-orange duration-200 text-white font-medium text-sm py-2">Show Interest</button>
-                                </Link>
-                            </SplideSlide>
+                            {productsList?.slice(0, 5)?.map((product, index) => {
+                                return (
+                                    <SplideSlide key={index} className="flex justify-center items-center">
+                                        <Link to={`/productDetail/${product._id}`} className="bg-white inline-block border border-lightOrange rounded-lg overflow-hidden">
+                                            <img src={product.files[0]} className="w-full h-48 object-cover" alt="" />
+                                            <div className="px-5 py-3">
+                                                <h4 className="text-lg font-semibold mb-1">{product.title}</h4>
+                                                <p className="text-sm text-gray-500">{product.city}, {product.state} ({product.pincode})</p>
+                                                <p className="text-sm text-gray-500">Qty.: {product.quantity}</p>
+                                                <p className="text-sm text-gray-500">Status: <span className="text-green-500 capitalize font-medium">{product.status}</span></p>
+                                            </div>
+                                            <button className="btn-block bg-lightOrange hover:bg-orange duration-200 text-white font-medium text-sm py-2">Show Interest</button>
+                                        </Link>
+                                    </SplideSlide>
+                                )
+                            })}
+
                         </Splide>
                     </div>
                     <div className="text-center">
@@ -200,102 +147,22 @@ function Home() {
                     <h3 className="text-4xl font-bold text-center mb-5">Latest Services Ads</h3>
                     <div>
                         <Splide aria-label="services slides" options={options2} className="pb-8">
-                            <SplideSlide className="flex justify-center items-center">
-                                <Link className="bg-white inline-block border border-lightOrange rounded-lg overflow-hidden">
-                                    <img src="/images/product1.jpg" className="w-full h-48 object-cover" alt="" />
-                                    <div className="px-5 py-3">
-                                        <h4 className="text-lg font-semibold mb-1">Product Name</h4>
-                                        <p className="text-sm text-gray-500">Varanasi, UP, India</p>
-                                        <p className="text-sm text-gray-500">Qty: 10</p>
-                                        <p className="text-sm text-gray-500">Status: <span className="text-green-500">Active</span></p>
-                                    </div>
-                                    <button className="btn-block bg-lightOrange hover:bg-orange duration-200 text-white font-medium text-sm py-2">Show Interest</button>
-                                </Link>
-                            </SplideSlide>
-                            <SplideSlide className="flex justify-center items-center">
-                                <Link className="bg-white inline-block border border-lightOrange rounded-lg overflow-hidden">
-                                    <img src="/images/product1.jpg" className="w-full h-48 object-cover" alt="" />
-                                    <div className="px-5 py-3">
-                                        <h4 className="text-lg font-semibold mb-1">Product Name</h4>
-                                        <p className="text-sm text-gray-500">Varanasi, UP, India</p>
-                                        <p className="text-sm text-gray-500">Qty: 10</p>
-                                        <p className="text-sm text-gray-500">Status: <span className="text-green-500">Active</span></p>
-                                    </div>
-                                    <button className="btn-block bg-lightOrange hover:bg-orange duration-200 text-white font-medium text-sm py-2">Show Interest</button>
-                                </Link>
-                            </SplideSlide>
-                            <SplideSlide className="flex justify-center items-center">
-                                <Link className="bg-white inline-block border border-lightOrange rounded-lg overflow-hidden">
-                                    <img src="/images/product1.jpg" className="w-full h-48 object-cover" alt="" />
-                                    <div className="px-5 py-3">
-                                        <h4 className="text-lg font-semibold mb-1">Product Name</h4>
-                                        <p className="text-sm text-gray-500">Varanasi, UP, India</p>
-                                        <p className="text-sm text-gray-500">Qty: 10</p>
-                                        <p className="text-sm text-gray-500">Status: <span className="text-green-500">Active</span></p>
-                                    </div>
-                                    <button className="btn-block bg-lightOrange hover:bg-orange duration-200 text-white font-medium text-sm py-2">Show Interest</button>
-                                </Link>
-                            </SplideSlide>
-                            <SplideSlide className="flex justify-center items-center">
-                                <Link className="bg-white inline-block border border-lightOrange rounded-lg overflow-hidden">
-                                    <img src="/images/product1.jpg" className="w-full h-48 object-cover" alt="" />
-                                    <div className="px-5 py-3">
-                                        <h4 className="text-lg font-semibold mb-1">Product Name</h4>
-                                        <p className="text-sm text-gray-500">Varanasi, UP, India</p>
-                                        <p className="text-sm text-gray-500">Qty: 10</p>
-                                        <p className="text-sm text-gray-500">Status: <span className="text-green-500">Active</span></p>
-                                    </div>
-                                    <button className="btn-block bg-lightOrange hover:bg-orange duration-200 text-white font-medium text-sm py-2">Show Interest</button>
-                                </Link>
-                            </SplideSlide>
-                            <SplideSlide className="flex justify-center items-center">
-                                <Link className="bg-white inline-block border border-lightOrange rounded-lg overflow-hidden">
-                                    <img src="/images/product1.jpg" className="w-full h-48 object-cover" alt="" />
-                                    <div className="px-5 py-3">
-                                        <h4 className="text-lg font-semibold mb-1">Product Name</h4>
-                                        <p className="text-sm text-gray-500">Varanasi, UP, India</p>
-                                        <p className="text-sm text-gray-500">Qty: 10</p>
-                                        <p className="text-sm text-gray-500">Status: <span className="text-green-500">Active</span></p>
-                                    </div>
-                                    <button className="btn-block bg-lightOrange hover:bg-orange duration-200 text-white font-medium text-sm py-2">Show Interest</button>
-                                </Link>
-                            </SplideSlide>
-                            <SplideSlide className="flex justify-center items-center">
-                                <Link className="bg-white inline-block border border-lightOrange rounded-lg overflow-hidden">
-                                    <img src="/images/product1.jpg" className="w-full h-48 object-cover" alt="" />
-                                    <div className="px-5 py-3">
-                                        <h4 className="text-lg font-semibold mb-1">Product Name</h4>
-                                        <p className="text-sm text-gray-500">Varanasi, UP, India</p>
-                                        <p className="text-sm text-gray-500">Qty: 10</p>
-                                        <p className="text-sm text-gray-500">Status: <span className="text-green-500">Active</span></p>
-                                    </div>
-                                    <button className="btn-block bg-lightOrange hover:bg-orange duration-200 text-white font-medium text-sm py-2">Show Interest</button>
-                                </Link>
-                            </SplideSlide>
-                            <SplideSlide className="flex justify-center items-center">
-                                <Link className="bg-white inline-block border border-lightOrange rounded-lg overflow-hidden">
-                                    <img src="/images/product1.jpg" className="w-full h-48 object-cover" alt="" />
-                                    <div className="px-5 py-3">
-                                        <h4 className="text-lg font-semibold mb-1">Product Name</h4>
-                                        <p className="text-sm text-gray-500">Varanasi, UP, India</p>
-                                        <p className="text-sm text-gray-500">Qty: 10</p>
-                                        <p className="text-sm text-gray-500">Status: <span className="text-green-500">Active</span></p>
-                                    </div>
-                                    <button className="btn-block bg-lightOrange hover:bg-orange duration-200 text-white font-medium text-sm py-2">Show Interest</button>
-                                </Link>
-                            </SplideSlide>
-                            <SplideSlide className="flex justify-center items-center">
-                                <Link className="bg-white inline-block border border-lightOrange rounded-lg overflow-hidden">
-                                    <img src="/images/product1.jpg" className="w-full h-48 object-cover" alt="" />
-                                    <div className="px-5 py-3">
-                                        <h4 className="text-lg font-semibold mb-1">Product Name</h4>
-                                        <p className="text-sm text-gray-500">Varanasi, UP, India</p>
-                                        <p className="text-sm text-gray-500">Qty: 10</p>
-                                        <p className="text-sm text-gray-500">Status: <span className="text-green-500">Active</span></p>
-                                    </div>
-                                    <button className="btn-block bg-lightOrange hover:bg-orange duration-200 text-white font-medium text-sm py-2">Show Interest</button>
-                                </Link>
-                            </SplideSlide>
+                            {servicesList?.slice(0, 5)?.map((service, index) => {
+                                return (
+                                    <SplideSlide key={index} className="flex justify-center items-center">
+                                        <Link to={`/serviceDetail/${service._id}`} className="bg-white inline-block border border-lightOrange rounded-lg overflow-hidden">
+                                            <img src={service.files[0]} className="w-full h-48 object-cover" alt="" />
+                                            <div className="px-5 py-3">
+                                                <h4 className="text-lg font-semibold mb-1">{service.title}</h4>
+                                                <p className="text-sm text-gray-500">{service.city}, {service.state} ({service.pincode})</p>
+                                                <p className="text-sm text-gray-500">{service.quantity}</p>
+                                                <p className="text-sm text-gray-500">Status: <span className="text-green-500 capitalize font-medium">{service.status}</span></p>
+                                            </div>
+                                            <button className="btn-block bg-lightOrange hover:bg-orange duration-200 text-white font-medium text-sm py-2">Show Interest</button>
+                                        </Link>
+                                    </SplideSlide>
+                                )
+                            })}
                         </Splide>
                     </div>
                     <div className="text-center">
@@ -306,110 +173,23 @@ function Home() {
                     <h3 className="text-4xl font-bold text-center mb-5">Latest Jobs Posted</h3>
                     <div>
                         <Splide aria-label="jobs slides" options={options3} className="pb-8">
-                            <SplideSlide className="flex justify-center items-center">
-                                <Link className="w-72 bg-white inline-block border border-lightOrange rounded-lg overflow-hidden">
-                                    {/* <img src="/images/product1.jpg" className="w-full h-48 object-cover" alt="" /> */}
-                                    <div className="px-5 py-3">
-                                        <h4 className="text-lg font-semibold mb-1">Web Developer</h4>
-                                        <p className="text-sm text-gray-500">Varanasi, UP, India</p>
-                                        <p className="text-sm text-gray-500">Positions: 1</p>
-                                        <p className="text-md text-gray-700 font-medium mt-1">Dizi Global Solutions</p>
-                                        <p className="text-sm text-gray-500">Status: <span className="text-green-500">Active</span></p>
-                                    </div>
-                                    <button className="btn-block bg-lightOrange hover:bg-orange duration-200 text-white font-medium text-sm py-2">Read more</button>
-                                </Link>
-                            </SplideSlide>
-                            <SplideSlide className="flex justify-center items-center">
-                                <Link className="w-72 bg-white inline-block border border-lightOrange rounded-lg overflow-hidden">
-                                    {/* <img src="/images/product1.jpg" className="w-full h-48 object-cover" alt="" /> */}
-                                    <div className="px-5 py-3">
-                                        <h4 className="text-lg font-semibold mb-1">Web Developer</h4>
-                                        <p className="text-sm text-gray-500">Varanasi, UP, India</p>
-                                        <p className="text-sm text-gray-500">Positions: 1</p>
-                                        <p className="text-md text-gray-700 font-medium mt-1">Dizi Global Solutions</p>
-                                        <p className="text-sm text-gray-500">Status: <span className="text-green-500">Active</span></p>
-                                    </div>
-                                    <button className="btn-block bg-lightOrange hover:bg-orange duration-200 text-white font-medium text-sm py-2">Read more</button>
-                                </Link>
-                            </SplideSlide>
-                            <SplideSlide className="flex justify-center items-center">
-                                <Link className="w-72 bg-white inline-block border border-lightOrange rounded-lg overflow-hidden">
-                                    {/* <img src="/images/product1.jpg" className="w-full h-48 object-cover" alt="" /> */}
-                                    <div className="px-5 py-3">
-                                        <h4 className="text-lg font-semibold mb-1">Web Developer</h4>
-                                        <p className="text-sm text-gray-500">Varanasi, UP, India</p>
-                                        <p className="text-sm text-gray-500">Positions: 1</p>
-                                        <p className="text-md text-gray-700 font-medium mt-1">Dizi Global Solutions</p>
-                                        <p className="text-sm text-gray-500">Status: <span className="text-green-500">Active</span></p>
-                                    </div>
-                                    <button className="btn-block bg-lightOrange hover:bg-orange duration-200 text-white font-medium text-sm py-2">Read more</button>
-                                </Link>
-                            </SplideSlide>
-                            <SplideSlide className="flex justify-center items-center">
-                                <Link className="w-72 bg-white inline-block border border-lightOrange rounded-lg overflow-hidden">
-                                    {/* <img src="/images/product1.jpg" className="w-full h-48 object-cover" alt="" /> */}
-                                    <div className="px-5 py-3">
-                                        <h4 className="text-lg font-semibold mb-1">Web Developer</h4>
-                                        <p className="text-sm text-gray-500">Varanasi, UP, India</p>
-                                        <p className="text-sm text-gray-500">Positions: 1</p>
-                                        <p className="text-md text-gray-700 font-medium mt-1">Dizi Global Solutions</p>
-                                        <p className="text-sm text-gray-500">Status: <span className="text-green-500">Active</span></p>
-                                    </div>
-                                    <button className="btn-block bg-lightOrange hover:bg-orange duration-200 text-white font-medium text-sm py-2">Read more</button>
-                                </Link>
-                            </SplideSlide>
-                            <SplideSlide className="flex justify-center items-center">
-                                <Link className="w-72 bg-white inline-block border border-lightOrange rounded-lg overflow-hidden">
-                                    {/* <img src="/images/product1.jpg" className="w-full h-48 object-cover" alt="" /> */}
-                                    <div className="px-5 py-3">
-                                        <h4 className="text-lg font-semibold mb-1">Web Developer</h4>
-                                        <p className="text-sm text-gray-500">Varanasi, UP, India</p>
-                                        <p className="text-sm text-gray-500">Positions: 1</p>
-                                        <p className="text-md text-gray-700 font-medium mt-1">Dizi Global Solutions</p>
-                                        <p className="text-sm text-gray-500">Status: <span className="text-green-500">Active</span></p>
-                                    </div>
-                                    <button className="btn-block bg-lightOrange hover:bg-orange duration-200 text-white font-medium text-sm py-2">Read more</button>
-                                </Link>
-                            </SplideSlide>
-                            <SplideSlide className="flex justify-center items-center">
-                                <Link className="w-72 bg-white inline-block border border-lightOrange rounded-lg overflow-hidden">
-                                    {/* <img src="/images/product1.jpg" className="w-full h-48 object-cover" alt="" /> */}
-                                    <div className="px-5 py-3">
-                                        <h4 className="text-lg font-semibold mb-1">Web Developer</h4>
-                                        <p className="text-sm text-gray-500">Varanasi, UP, India</p>
-                                        <p className="text-sm text-gray-500">Positions: 1</p>
-                                        <p className="text-md text-gray-700 font-medium mt-1">Dizi Global Solutions</p>
-                                        <p className="text-sm text-gray-500">Status: <span className="text-green-500">Active</span></p>
-                                    </div>
-                                    <button className="btn-block bg-lightOrange hover:bg-orange duration-200 text-white font-medium text-sm py-2">Read more</button>
-                                </Link>
-                            </SplideSlide>
-                            <SplideSlide className="flex justify-center items-center">
-                                <Link className="w-72 bg-white inline-block border border-lightOrange rounded-lg overflow-hidden">
-                                    {/* <img src="/images/product1.jpg" className="w-full h-48 object-cover" alt="" /> */}
-                                    <div className="px-5 py-3">
-                                        <h4 className="text-lg font-semibold mb-1">Web Developer</h4>
-                                        <p className="text-sm text-gray-500">Varanasi, UP, India</p>
-                                        <p className="text-sm text-gray-500">Positions: 1</p>
-                                        <p className="text-md text-gray-700 font-medium mt-1">Dizi Global Solutions</p>
-                                        <p className="text-sm text-gray-500">Status: <span className="text-green-500">Active</span></p>
-                                    </div>
-                                    <button className="btn-block bg-lightOrange hover:bg-orange duration-200 text-white font-medium text-sm py-2">Read more</button>
-                                </Link>
-                            </SplideSlide>
-                            <SplideSlide className="flex justify-center items-center">
-                                <Link className="w-72 bg-white inline-block border border-lightOrange rounded-lg overflow-hidden">
-                                    {/* <img src="/images/product1.jpg" className="w-full h-48 object-cover" alt="" /> */}
-                                    <div className="px-5 py-3">
-                                        <h4 className="text-lg font-semibold mb-1">Web Developer</h4>
-                                        <p className="text-sm text-gray-500">Varanasi, UP, India</p>
-                                        <p className="text-sm text-gray-500">Positions: 1</p>
-                                        <p className="text-md text-gray-700 font-medium mt-1">Dizi Global Solutions</p>
-                                        <p className="text-sm text-gray-500">Status: <span className="text-green-500">Active</span></p>
-                                    </div>
-                                    <button className="btn-block bg-lightOrange hover:bg-orange duration-200 text-white font-medium text-sm py-2">Read more</button>
-                                </Link>
-                            </SplideSlide>
+                            {jobsList?.slice(0, 5)?.map((job, index) => {
+                                return (
+                                    <SplideSlide key={index} className="flex justify-center items-center">
+                                        <Link className="w-72 bg-white inline-block border border-lightOrange rounded-lg overflow-hidden">
+                                            {/* <img src="/images/product1.jpg" className="w-full h-48 object-cover" alt="" /> */}
+                                            <div className="px-5 py-3">
+                                                <h4 className="text-lg font-semibold mb-1">{job.jobTitle}</h4>
+                                                <p className="text-sm text-gray-500">{job.city}, {job.state}, ({job.pincode})</p>
+                                                <p className="text-sm text-gray-500">Positions: {job.numberOfServices}</p>
+                                                <p className="text-md text-gray-700 font-medium mt-1">Company name</p>
+                                                <p className="text-sm text-gray-500">Status: <span className="text-green-500 capitalize font-medium">{job.status}</span></p>
+                                            </div>
+                                            <button className="btn-block bg-lightOrange hover:bg-orange duration-200 text-white font-medium text-sm py-2">Read more</button>
+                                        </Link>
+                                    </SplideSlide>
+                                )
+                            })}
                         </Splide>
                     </div>
                     <div className="text-center">
