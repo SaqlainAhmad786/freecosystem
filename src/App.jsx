@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
+import { AuthProvider } from "./contexts/authContext"
 import Home from "./pages/Home"
 import Login from "./pages/Login"
 import Signup from "./pages/Signup"
@@ -19,9 +20,9 @@ import EditProduct from "./components/EditProduct/EditProduct"
 import EditService from "./components/EditService/EditService"
 import EditJob from "./components/EditJob/EditJob"
 import Interests from "./pages/Interests"
-import { AuthProvider } from "./contexts/authContext"
 import LoggedIn from "./components/LoggedIn/LoggedIn"
 import NotLoggedIn from "./components/NotLoggedIn/NotLoggedIn"
+import ScrollToTop from "./components/ScrollToTop/ScrollToTop"
 
 function App() {
 
@@ -29,6 +30,7 @@ function App() {
     <>
       <AuthProvider>
         <BrowserRouter>
+          <ScrollToTop />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<LoggedIn Component={Login} />} />

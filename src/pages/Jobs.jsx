@@ -12,7 +12,7 @@ function Jobs() {
         <>
             <Navbar />
             <main>
-                <div className=" relative lg:h-[360px] md:h-[280px] sm:h-[240px] h-[200px]">
+                <div className=" relative lg:h-[280px] md:h-[240px] sm:h-[220px] h-[180px]">
                     <div className="bg-[url(/images/jobs-cover.jpg)] bg-cover bg-center h-full"></div>
                     <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-black to-transparent"></div>
                     <div className="absolute top-1/2 left-[10%] -translate-y-1/2">

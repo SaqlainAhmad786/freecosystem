@@ -1,32 +1,75 @@
-import { useEffect, useState } from "react";
-import Footer from "../components/Footer/Footer"
+import { useState } from "react";
 import Navbar from "../components/Navbar/Navbar"
 import TermCond from "../components/TermCond/TermCond";
+import Footer from "../components/Footer/Footer"
 import axios from "axios";
-import { City, State } from "country-state-city";
+import { toast, Toaster } from "sonner";
 
 function PostAd() {
-    const [activeTab, setActiveTab] = useState('tab1'); // Default active tab
-    const [states, setStates] = useState([])
-    const [cities, setCities] = useState([])
+    const [activeTab, setActiveTab] = useState('tab1');
     const [selectedFiles, setSelectedFiles] = useState([]);
+
+    const [pincode, setPincode] = useState("");
+    const [state, setState] = useState("");
+    const [city, setCity] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [timer, setTimer] = useState(null);
 
     const handleFileChange = (event) => {
         const files = Array.from(event.target.files);
         setSelectedFiles(files);
     };
 
-    useEffect(() => {
-        const fetchStates = () => {
-            const statesList = State.getStatesOfCountry("IN")
-            setStates(statesList);
-        };
-        fetchStates()
-    }, [])
+    const fetchPincodeData = async (value) => {
+        setLoading(true);
+
+        try {
+            const response = await axios.get(`https://api.postalpincode.in/pincode/${value}`);
+            const data = response.data[0];
+
+            if (data.Status === "Success") {
+                const postOffice = data.PostOffice[0]; // First matching location
+                setState(postOffice.State);
+                setCity(postOffice.District);
+            } else {
+                toast.error("Invalid PIN code. Please try again.");
+                setState("");
+                setCity("");
+            }
+        } catch (err) {
+            toast.error("Error fetching pincode data. Try again later.");
+            setState("");
+            setCity("");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handlePincodeChange = (e) => {
+        const value = e.target.value;
+        setPincode(value);
+
+        if (timer) {
+            clearTimeout(timer);
+        }
+
+        if (value.length === 6) {
+            const newTimer = setTimeout(() => {
+                fetchPincodeData(value);
+            }, 1000);
+
+            setTimer(newTimer);
+        } else {
+            setState("");
+            setCity("");
+        }
+    }
 
     const handleTabClick = (tabId) => {
         setActiveTab(tabId);
-        setCities([]);
+        setPincode('');
+        setState('');
+        setCity('');
     };
 
     async function handleSubmit(e, type) {
@@ -37,7 +80,6 @@ function PostAd() {
         const images = selectedFiles.map(file => URL.createObjectURL(file))
 
         const finalData = { ...data, files: images }
-        // console.log(finalData)
 
         try {
             const res = await axios.post(`${import.meta.env.VITE_BASE_URL}/listings/${type}`, finalData, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } })
@@ -47,22 +89,11 @@ function PostAd() {
         }
     }
 
-    const handleStateChange = (event) => {
-        const stateName = event.target.value;
-        const stateData = states.find((state) => state.name === stateName);
-        const stateCode = stateData.isoCode;
-        fetchCities(stateCode);
-    };
-
-    const fetchCities = (stateCode) => {
-        const citiesList = City.getCitiesOfState("IN", stateCode);
-        setCities(citiesList);
-    };
-
     return (
         <>
             <Navbar />
             <main>
+                <Toaster position="top-right" richColors />
                 <div className="customContainer my-2">
                     <p className="text-lg font-semibold">Post Ad</p>
                 </div>
@@ -125,39 +156,53 @@ function PostAd() {
                                         </div>
                                         <div>
                                             <label className="text-gray-600 text-sm mb-1 font-medium block">Sub-Category of Ad</label>
-                                            <select name="subCategory" className="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 rounded focus:bg-transparent outline-lightOrange transition-all" id="">
+                                            <select
+                                                name="subCategory"
+                                                className="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 rounded focus:bg-transparent outline-lightOrange transition-all"
+                                                id=""
+                                            >
                                                 <option value="">Select Sub-Category</option>
-                                                <option value="laptop">Laptop</option>
-                                                <option value="mobile">Mobile</option>
-                                                <option value="camera">Camera</option>
-                                                <option value="watch">Watch</option>
-                                                <option value="tv">TV</option>
+                                                <option value="furniture">Furniture</option>
+                                                <option value="kitchen-dining">Kitchen & Dining</option>
+                                                <option value="home-decor">Home Décor</option>
+                                                <option value="fine-art">Fine Art</option>
+                                                <option value="pets">Pets</option>
+                                                <option value="electronics">Electronics</option>
+                                                <option value="bedroom-decor">Bedroom Décor</option>
+                                                <option value="books">Books</option>
+                                                <option value="medical-equipments">Medical Equipments</option>
+                                                <option value="clothes">Clothes</option>
+                                                <option value="shoes-chappals">Shoes, Chappals</option>
+                                                <option value="toys-cycles">Toys, Cycles</option>
+                                                <option value="sports-specific">Sports Specific</option>
+                                                <option value="school-kits">School Kits</option>
+                                                <option value="other">Other</option>
                                             </select>
+
                                         </div>
                                         <div>
                                             <label className="text-gray-600 text-sm mb-1 font-medium block">Quantity</label>
                                             <input name="quantity" type="number" className="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 rounded focus:bg-transparent outline-lightOrange transition-all" placeholder="Enter Product quantity" />
                                         </div>
-                                        <div>
+                                        <div className="relative">
                                             <label className="text-gray-600 text-sm font-medium mb-1 block">Pincode</label>
-                                            <input name="pincode" type="text" className="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 rounded focus:bg-transparent outline-lightOrange transition-all" placeholder="Enter Pincode" />
+                                            <input name="pincode" type="number" maxLength="6" value={pincode}
+                                                onChange={handlePincodeChange} className="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 rounded focus:bg-transparent outline-lightOrange transition-all" placeholder="Enter Pincode" disabled={loading} />
+                                            {loading && <div className="absolute top-9 right-4">
+                                                <l-tail-chase
+                                                    size="20"
+                                                    speed="1.75"
+                                                    color="#FA4032"
+                                                ></l-tail-chase>
+                                            </div>}
                                         </div>
                                         <div>
                                             <label className="text-gray-600 text-sm mb-1 font-medium block">State</label>
-                                            <select className="rounded p-3 mb-4 text-black text-sm outline-lightOrange bg-gray-100 w-full" name="state" onChange={(e) => handleStateChange(e)}>
-                                                <option hidden>Select State</option>
-                                                {states.map((state, index) => <option value={state.name} key={index}>{state.name}</option>)}
-                                            </select>
+                                            <input name="state" type="text" className="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 rounded focus:bg-transparent outline-lightOrange transition-all" placeholder="Enter State" value={state} />
                                         </div>
                                         <div>
                                             <label className="text-gray-600 text-sm mb-1 font-medium block">City</label>
-                                            <select className="rounded p-3 mb-4 text-black text-sm outline-lightOrange bg-gray-100 w-full" name="city" onChange={(e) => handleStateChange(e)} disabled={cities.length === 0}>
-                                                <option hidden>Select City</option>
-                                                {cities.length === 0
-                                                    ? <option disabled>Select State first</option>
-                                                    : cities.map((city, index) => <option value={city.name} key={index}>{city.name}</option>)
-                                                }
-                                            </select>
+                                            <input name="city" type="text" className="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 rounded focus:bg-transparent outline-lightOrange transition-all" placeholder="Enter City" value={city} />
                                         </div>
                                         <div className="lg:col-span-2 md:col-span-1">
                                             <label className="text-gray-600 text-sm mb-1 font-medium block">Description</label>
@@ -199,39 +244,54 @@ function PostAd() {
                                         </div>
                                         <div>
                                             <label className="text-gray-600 text-sm mb-1 font-medium block">Sub-Category of Ad</label>
-                                            <select name="subCategory" className="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 rounded focus:bg-transparent outline-lightOrange transition-all" id="">
+                                            <select
+                                                name="subCategory"
+                                                className="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 rounded focus:bg-transparent outline-lightOrange transition-all"
+                                                id=""
+                                            >
                                                 <option value="">Select Sub-Category</option>
-                                                <option value="laptop">Laptop</option>
-                                                <option value="mobile">Mobile</option>
-                                                <option value="camera">Camera</option>
-                                                <option value="watch">Watch</option>
-                                                <option value="tv">TV</option>
+                                                <option value="dance">Dance</option>
+                                                <option value="instruments">Instruments</option>
+                                                <option value="karate">Karate</option>
+                                                <option value="boxing">Boxing</option>
+                                                <option value="sports-specific">Sports Specific</option>
+                                                <option value="personality-development">Personality Development</option>
+                                                <option value="public-speaking">Public Speaking</option>
+                                                <option value="tailoring">Tailoring</option>
+                                                <option value="beauty-salon">Beauty Salon</option>
+                                                <option value="fitness-training">Fitness Training</option>
+                                                <option value="coaching-classes">Coaching Classes</option>
+                                                <option value="cooking">Cooking</option>
+                                                <option value="stock-market">Stock Market</option>
+                                                <option value="sales">Sales</option>
+                                                <option value="interview-preparation">Interview Preparation</option>
+                                                <option value="entrance-exam-preparation">Entrance Exam Preparation</option>
+                                                <option value="other">Other</option>
                                             </select>
                                         </div>
                                         <div>
                                             <label className="text-gray-600 text-sm mb-1 font-medium block">Number of Services </label>
                                             <input name="numberOfServices" type="number" className="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 rounded focus:bg-transparent outline-lightOrange transition-all" placeholder="Enter Sevices quantity" />
                                         </div>
-                                        <div>
+                                        <div className="relative">
                                             <label className="text-gray-600 text-sm font-medium mb-1 block">Pincode</label>
-                                            <input name="pincode" type="text" className="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 rounded focus:bg-transparent outline-lightOrange transition-all" placeholder="Enter Pincode" />
+                                            <input name="pincode" type="number" maxLength="6" value={pincode}
+                                                onChange={handlePincodeChange} className="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 rounded focus:bg-transparent outline-lightOrange transition-all" placeholder="Enter Pincode" disabled={loading} />
+                                            {loading && <div className="absolute top-9 right-4">
+                                                <l-tail-chase
+                                                    size="20"
+                                                    speed="1.75"
+                                                    color="#FA4032"
+                                                ></l-tail-chase>
+                                            </div>}
                                         </div>
                                         <div>
                                             <label className="text-gray-600 text-sm mb-1 font-medium block">State</label>
-                                            <select className="rounded p-3 mb-4 text-black text-sm outline-lightOrange bg-gray-100 w-full" name="state" onChange={(e) => handleStateChange(e)}>
-                                                <option hidden>Select State</option>
-                                                {states.map((state, index) => <option value={state.name} key={index}>{state.name}</option>)}
-                                            </select>
+                                            <input name="state" type="text" className="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 rounded focus:bg-transparent outline-lightOrange transition-all" placeholder="Enter State" value={state} />
                                         </div>
                                         <div>
                                             <label className="text-gray-600 text-sm mb-1 font-medium block">City</label>
-                                            <select className="rounded p-3 mb-4 text-black text-sm outline-lightOrange bg-gray-100 w-full" name="city" onChange={(e) => handleStateChange(e)} disabled={cities.length === 0}>
-                                                <option hidden>Select City</option>
-                                                {cities.length === 0
-                                                    ? <option disabled>Select State first</option>
-                                                    : cities.map((city, index) => <option value={city.name} key={index}>{city.name}</option>)
-                                                }
-                                            </select>
+                                            <input name="city" type="text" className="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 rounded focus:bg-transparent outline-lightOrange transition-all" placeholder="Enter City" value={city} />
                                         </div>
                                         <div className="lg:col-span-2 md:col-span-1">
                                             <label className="text-gray-600 text-sm mb-1 font-medium block">Description</label>
@@ -273,39 +333,60 @@ function PostAd() {
                                         </div>
                                         <div>
                                             <label className="text-gray-600 text-sm mb-1 font-medium block">Category of Ad</label>
-                                            <select name="subCategory" className="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 rounded focus:bg-transparent outline-lightOrange transition-all" id="">
+                                            <select
+                                                name="subCategory"
+                                                className="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 rounded focus:bg-transparent outline-lightOrange transition-all"
+                                                id=""
+                                            >
                                                 <option value="">Select Sub-Category</option>
-                                                <option value="laptop">Laptop</option>
-                                                <option value="mobile">Mobile</option>
-                                                <option value="camera">Camera</option>
-                                                <option value="watch">Watch</option>
-                                                <option value="tv">TV</option>
+                                                <option value="technology">Technology (S/w or H/w)</option>
+                                                <option value="marketing">Marketing</option>
+                                                <option value="hr">HR</option>
+                                                <option value="admin">Admin</option>
+                                                <option value="accounts-finance">Accounts & Finance</option>
+                                                <option value="banking">Banking</option>
+                                                <option value="security">Security</option>
+                                                <option value="call-center">Call Center</option>
+                                                <option value="office-infrastructure">Office Infrastructure</option>
+                                                <option value="legal">Legal</option>
+                                                <option value="medical">Medical</option>
+                                                <option value="hospitality">Hospitality</option>
+                                                <option value="education">Education</option>
+                                                <option value="driver">Driver</option>
+                                                <option value="worker">Worker</option>
+                                                <option value="pharma">Pharma</option>
+                                                <option value="manufacturing">Manufacturing</option>
+                                                <option value="aviation">Aviation</option>
+                                                <option value="construction">Construction</option>
+                                                <option value="supply-chain">Supply Chain</option>
+                                                <option value="management">Management</option>
+                                                <option value="other">Other</option>
                                             </select>
+
                                         </div>
                                         <div>
                                             <label className="text-gray-600 text-sm mb-1 font-medium block">Number of Positions</label>
                                             <input name="numberOfServices" type="number" className="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 rounded focus:bg-transparent outline-lightOrange transition-all" placeholder="Enter Sevices quantity" />
                                         </div>
-                                        <div>
+                                        <div className="relative">
                                             <label className="text-gray-600 text-sm font-medium mb-1 block">Pincode</label>
-                                            <input name="pincode" type="text" className="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 rounded focus:bg-transparent outline-lightOrange transition-all" placeholder="Enter Pincode" />
+                                            <input name="pincode" type="number" maxLength="6" value={pincode}
+                                                onChange={handlePincodeChange} className="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 rounded focus:bg-transparent outline-lightOrange transition-all" placeholder="Enter Pincode" disabled={loading} />
+                                            {loading && <div className="absolute top-9 right-4">
+                                                <l-tail-chase
+                                                    size="20"
+                                                    speed="1.75"
+                                                    color="#FA4032"
+                                                ></l-tail-chase>
+                                            </div>}
                                         </div>
                                         <div>
                                             <label className="text-gray-600 text-sm mb-1 font-medium block">State</label>
-                                            <select className="rounded p-3 mb-4 text-black text-sm outline-lightOrange bg-gray-100 w-full" name="state" onChange={(e) => handleStateChange(e)}>
-                                                <option hidden>Select State</option>
-                                                {states.map((state, index) => <option value={state.name} key={index}>{state.name}</option>)}
-                                            </select>
+                                            <input name="state" type="text" className="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 rounded focus:bg-transparent outline-lightOrange transition-all" placeholder="Enter State" value={state} />
                                         </div>
                                         <div>
                                             <label className="text-gray-600 text-sm mb-1 font-medium block">City</label>
-                                            <select className="rounded p-3 mb-4 text-black text-sm outline-lightOrange bg-gray-100 w-full" name="city" onChange={(e) => handleStateChange(e)} disabled={cities.length === 0}>
-                                                <option hidden>Select City</option>
-                                                {cities.length === 0
-                                                    ? <option disabled>Select State first</option>
-                                                    : cities.map((city, index) => <option value={city.name} key={index}>{city.name}</option>)
-                                                }
-                                            </select>
+                                            <input name="city" type="text" className="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 rounded focus:bg-transparent outline-lightOrange transition-all" placeholder="Enter City" value={city} />
                                         </div>
                                         <div className="lg:col-span-2 md:col-span-1">
                                             <label className="text-gray-600 text-sm mb-1 font-medium block">Job Description</label>
@@ -363,11 +444,27 @@ function PostAd() {
                                         </div>
                                         <div>
                                             <label className="text-gray-600 text-sm mb-1 font-medium block">Age</label>
-                                            <input name="age" type="text" className="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 rounded focus:bg-transparent outline-lightOrange transition-all" placeholder="Enter your age" />
+                                            <input name="age" type="text" className="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 rounded focus:bg-transparent outline-lightOrange transition-all" placeholder="Enter your age (18 to 80 years)" />
                                         </div>
                                         <div>
                                             <label className="text-gray-600 text-sm mb-1 font-medium block">Religion</label>
-                                            <input name="religion" type="caste" className="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 rounded focus:bg-transparent outline-lightOrange transition-all" placeholder="Enter your religion" />
+                                            <select
+                                                name="religion"
+                                                className="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 rounded focus:bg-transparent outline-lightOrange transition-all"
+                                                id=""
+                                            >
+                                                <option value="">Select Religion</option>
+                                                <option value="doesnt-matter">{`Doesn't`} Matter</option>
+                                                <option value="hindu">Hindu</option>
+                                                <option value="muslim">Muslim</option>
+                                                <option value="sikh">Sikh</option>
+                                                <option value="christian">Christian</option>
+                                                <option value="buddhist">Buddhist</option>
+                                                <option value="jain">Jain</option>
+                                                <option value="parsi">Parsi</option>
+                                                <option value="other">Other</option>
+                                            </select>
+
                                         </div>
                                         <div>
                                             <label className="text-gray-600 text-sm mb-1 font-medium block">Caste</label>
@@ -375,49 +472,181 @@ function PostAd() {
                                         </div>
                                         <div>
                                             <label className="text-gray-600 text-sm mb-1 font-medium block">Marital Status</label>
-                                            <select name="maritalStatus" className="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 rounded focus:bg-transparent outline-lightOrange transition-all" id="">
-                                                <option hidden>Select your marital status</option>
-                                                <option value="Single">Single</option>
-                                                <option value="Married">Married</option>
+                                            <select
+                                                name="maritalStatus"
+                                                className="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 rounded focus:bg-transparent outline-lightOrange transition-all"
+                                                id=""
+                                            >
+                                                <option value="">Select Marital Status</option>
+                                                <option value="doesnt-matter">{`Doesn't`} Matter</option>
+                                                <option value="never-married">Never Married</option>
+                                                <option value="awaiting-divorce">Awaiting Divorce</option>
+                                                <option value="divorced">Divorced</option>
+                                                <option value="widowed">Widowed</option>
+                                                <option value="annulled">Annulled</option>
                                             </select>
+                                        </div>
+                                        <div>
+                                            <label className="text-gray-600 text-sm mb-1 font-medium block">Blood Group</label>
+                                            <select
+                                                name="bloodGroup"
+                                                className="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 rounded focus:bg-transparent outline-lightOrange transition-all"
+                                                id=""
+                                            >
+                                                <option value="">Select Blood Group</option>
+                                                <option value="a-positive">A Positive</option>
+                                                <option value="a-negative">A Negative</option>
+                                                <option value="b-positive">B Positive</option>
+                                                <option value="b-negative">B Negative</option>
+                                                <option value="ab-positive">AB Positive</option>
+                                                <option value="ab-negative">AB Negative</option>
+                                                <option value="o-positive">O Positive</option>
+                                                <option value="o-negative">O Negative</option>
+                                            </select>
+
                                         </div>
                                         <div>
                                             <label className="text-gray-600 text-sm mb-1 font-medium block">Height</label>
-                                            <input name="height" type="number" className="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 rounded focus:bg-transparent outline-lightOrange transition-all" placeholder="Enter your height in cm" />
+                                            <input name="height" type="text" className="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 rounded focus:bg-transparent outline-lightOrange transition-all" placeholder="Enter your height (5 ft 2 inch)" />
                                         </div>
                                         <div>
                                             <label className="text-gray-600 text-sm mb-1 font-medium block">Weight</label>
-                                            <input name="weight" type="number" className="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 rounded focus:bg-transparent outline-lightOrange transition-all" placeholder="Enter your weight" />
+                                            <input name="weight" type="text" className="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 rounded focus:bg-transparent outline-lightOrange transition-all" placeholder="Enter your weight (40 to 120kg)" />
+                                        </div>
+                                        <div>
+                                            <label className="text-gray-600 text-sm mb-1 font-medium block">Education</label>
+                                            <input name="education" type="text" className="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 rounded focus:bg-transparent outline-lightOrange transition-all" placeholder="Enter your weight (40 to 120kg)" />
                                         </div>
                                         <div>
                                             <label className="text-gray-600 text-sm mb-1 font-medium block">Occupation</label>
-                                            <select name="occupation" className="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 rounded focus:bg-transparent outline-lightOrange transition-all" id="">
-                                                <option hidden>Select your occupation</option>
-                                                <option value="Job">Job</option>
-                                                <option value="Business">Business</option>
-                                                <option value="Family business">Family Business</option>
-                                                <option value="Unemployed">Unemployed</option>
+                                            <select
+                                                name="occupation"
+                                                className="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 rounded focus:bg-transparent outline-lightOrange transition-all"
+                                                id=""
+                                            >
+                                                <option value="">Select Occupation</option>
+                                                <option value="doesnt-matter">{`Doesn't`} Matter</option>
+                                                <option value="private-sector">Private Sector</option>
+                                                <option value="govt-public-sector">Govt / Public Sector</option>
+                                                <option value="civil-services">Civil Services</option>
+                                                <option value="defence">Defence</option>
+                                                <option value="business-self-employed">Business / Self Employed</option>
+                                                <option value="professional">Professional (Doctor, CA, etc.)</option>
+                                                <option value="not-working">Not Working</option>
                                             </select>
                                         </div>
                                         <div>
+                                            <label className="text-gray-600 text-sm mb-1 font-medium block">Income Range</label>
+                                            <select
+                                                name="incomeRange"
+                                                className="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 rounded focus:bg-transparent outline-lightOrange transition-all"
+                                                id=""
+                                            >
+                                                <option value="">Select Income Range</option>
+                                                <option value="less-than-5-lakhs">Less than 5 Lakhs</option>
+                                                <option value="5-10-lakhs">5 to 10 Lakhs</option>
+                                                <option value="10-20-lakhs">10 to 20 Lakhs</option>
+                                                <option value="20-30-lakhs">20 to 30 Lakhs</option>
+                                                <option value="above-30-lakhs">Above 30 Lakhs</option>
+                                            </select>
+
+                                        </div>
+                                        <div>
+                                            <label className="text-gray-600 text-sm mb-1 font-medium block">Food Preferences</label>
+                                            <select
+                                                name="foodPreference"
+                                                className="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 rounded focus:bg-transparent outline-lightOrange transition-all"
+                                                id=""
+                                            >
+                                                <option value="">Select Food Preference</option>
+                                                <option value="doesnt-matter">{`Doesn't`} Matter</option>
+                                                <option value="vegetarian">Vegetarian</option>
+                                                <option value="non-vegetarian">Non-Vegetarian</option>
+                                                <option value="eggetarian">Eggetarian</option>
+                                                <option value="jain">Jain</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label className="text-gray-600 text-sm mb-1 font-medium block">Do you smoke?</label>
+                                            <select
+                                                name="smoking"
+                                                className="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 rounded focus:bg-transparent outline-lightOrange transition-all"
+                                                id=""
+                                            >
+                                                <option value="">Select choice</option>
+                                                <option value="yes">Yes</option>
+                                                <option value="no">No</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label className="text-gray-600 text-sm mb-1 font-medium block">Do you drink?</label>
+                                            <select
+                                                name="drinking"
+                                                className="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 rounded focus:bg-transparent outline-lightOrange transition-all"
+                                                id=""
+                                            >
+                                                <option value="">Select choice</option>
+                                                <option value="yes">Yes</option>
+                                                <option value="no">No</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label className="text-gray-600 text-sm mb-1 font-medium block">Ready to relocate within Country?</label>
+                                            <select
+                                                name="relocateWithinCountry"
+                                                className="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 rounded focus:bg-transparent outline-lightOrange transition-all"
+                                                id=""
+                                            >
+                                                <option value="">Select choice</option>
+                                                <option value="yes">Yes</option>
+                                                <option value="no">No</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label className="text-gray-600 text-sm mb-1 font-medium block">Ready to relocate outside Country?</label>
+                                            <select
+                                                name="relocateoutsideCountry"
+                                                className="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 rounded focus:bg-transparent outline-lightOrange transition-all"
+                                                id=""
+                                            >
+                                                <option value="">Select choice</option>
+                                                <option value="yes">Yes</option>
+                                                <option value="no">No</option>
+                                            </select>
+                                        </div>
+                                        <div className="relative">
                                             <label className="text-gray-600 text-sm font-medium mb-1 block">Pincode</label>
-                                            <input name="pincode" type="text" className="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 rounded focus:bg-transparent outline-lightOrange transition-all" placeholder="Enter Pincode" />
+                                            <input name="pincode" type="number" maxLength="6" value={pincode}
+                                                onChange={handlePincodeChange} className="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 rounded focus:bg-transparent outline-lightOrange transition-all" placeholder="Enter Pincode" disabled={loading} />
+                                            {loading && <div className="absolute top-9 right-4">
+                                                <l-tail-chase
+                                                    size="20"
+                                                    speed="1.75"
+                                                    color="#FA4032"
+                                                ></l-tail-chase>
+                                            </div>}
                                         </div>
                                         <div>
                                             <label className="text-gray-600 text-sm mb-1 font-medium block">State</label>
-                                            <select className="rounded p-3 mb-4 text-black text-sm outline-lightOrange bg-gray-100 w-full" name="state" onChange={(e) => handleStateChange(e)}>
-                                                <option hidden>Select State</option>
-                                                {states.map((state, index) => <option value={state.name} key={index}>{state.name}</option>)}
-                                            </select>
+                                            <input name="state" type="text" className="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 rounded focus:bg-transparent outline-lightOrange transition-all" placeholder="Enter State" value={state} />
                                         </div>
                                         <div>
                                             <label className="text-gray-600 text-sm mb-1 font-medium block">City</label>
-                                            <select className="rounded p-3 mb-4 text-black text-sm outline-lightOrange bg-gray-100 w-full" name="city" onChange={(e) => handleStateChange(e)} disabled={cities.length === 0}>
-                                                <option hidden>Select City</option>
-                                                {cities.length === 0
-                                                    ? <option disabled>Select State first</option>
-                                                    : cities.map((city, index) => <option value={city.name} key={index}>{city.name}</option>)
-                                                }
+                                            <input name="city" type="text" className="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 rounded focus:bg-transparent outline-lightOrange transition-all" placeholder="Enter City" value={city} />
+                                        </div>
+                                        <div>
+                                            <label className="text-gray-600 text-sm mb-1 font-medium block">Country</label>
+                                            <select
+                                                name="country"
+                                                className="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 rounded focus:bg-transparent outline-lightOrange transition-all"
+                                                id=""
+                                            >
+                                                <option value="">Select Country</option>
+                                                <option value="doesnt-matter">{`Doesn't`} Matter</option>
+                                                <option value="vegetarian">Vegetarian</option>
+                                                <option value="non-vegetarian">Non-Vegetarian</option>
+                                                <option value="eggetarian">Eggetarian</option>
+                                                <option value="jain">Jain</option>
                                             </select>
                                         </div>
                                         <div>
@@ -426,6 +655,10 @@ function PostAd() {
                                                 className="w-full text-gray-400 font-medium text-sm bg-white border file:cursor-pointer cursor-pointer file:border-0 file:py-3 file:px-4 file:mr-4 file:bg-gray-100 file:hover:bg-gray-200 file:text-gray-500 rounded" multiple accept="image/jpeg, image/png, image/jpg" onChange={handleFileChange} max="4" />
                                             <p className="text-xs text-gray-400 mt-2">Maximum file size: 2MB & Max file count: 4</p>
                                         </div>
+                                    </div>
+                                    <div>
+                                        <label className="text-gray-600 text-sm font-medium mb-1 block">Other info / Partner expectations</label>
+                                        <textarea name="otherInfo" className="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 rounded focus:bg-transparent outline-lightOrange transition-all" rows="4" id=""></textarea>
                                     </div>
                                     <div className="flex items-center mt-5">
                                         <input id="remember-me" name="remember-me" type="checkbox" className="h-4 w-4 shrink-0 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" />

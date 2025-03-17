@@ -12,7 +12,7 @@ function Services() {
         <>
             <Navbar />
             <main>
-                <div className=" relative lg:h-[360px] md:h-[280px] sm:h-[240px] h-[200px]">
+                <div className=" relative lg:h-[280px] md:h-[240px] sm:h-[220px] h-[180px]">
                     <div className="bg-[url(/images/services-cover.jpg)] bg-cover bg-center h-full"></div>
                     <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-black to-transparent"></div>
                     <div className="absolute top-1/2 left-[10%] -translate-y-1/2">
@@ -44,8 +44,8 @@ function Services() {
                         {servicesList.map((service, index) => {
                             return (
                                 <Link key={index} to={`/serviceDetail/${service._id}`} className="bg-white max-w-[320px] inline-block border border-lightOrange rounded-lg overflow-hidden">
-                                    <img src={service.files[0]} className="w-full h-48 object-cover" alt="" />
-                                    <div className="px-5 py-3">
+                                    <img src={service.files[0]} className="w-full h-40 object-cover" alt="" />
+                                    <div className="px-5 py-2">
                                         <h4 className="text-lg font-semibold mb-1">{service.title}</h4>
                                         <p className="text-sm text-gray-500">{service.city}, {service.state} ({service.pincode})</p>
                                         <p className="text-sm text-gray-500">Qty: {service.numberOfServices}</p>

@@ -7,7 +7,7 @@ function NotLoggedIn({ Component }) {
 
     useEffect(() => {
         if (!token) {
-            navigate('/');
+            navigate('/login');
         }
     }, [token, navigate]);
 

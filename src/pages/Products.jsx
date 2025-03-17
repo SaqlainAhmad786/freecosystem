@@ -12,7 +12,7 @@ function Products() {
         <>
             <Navbar />
             <main>
-                <div className="relative lg:h-[360px] md:h-[280px] sm:h-[240px] h-[200px]">
+                <div className="relative lg:h-[280px] md:h-[240px] sm:h-[220px] h-[180px]">
                     <div className="bg-[url(/images/product-cover.jpg)] bg-cover bg-center h-full"></div>
                     <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-black to-transparent"></div>
                     <div className="absolute top-1/2 left-[10%] -translate-y-1/2">
@@ -44,9 +44,9 @@ function Products() {
                         {productsList.map((product, index) => {
                             return (
                                 <Link key={index} to={`/productDetail/${product._id}`} className="bg-white max-w-[320px] inline-block border border-lightOrange rounded-lg overflow-hidden">
-                                    <img src={product.files[0]} className="w-full h-48 object-cover" alt="" />
-                                    <div className="px-5 py-3">
-                                        <h4 className="text-lg font-semibold mb-1">{product.title}</h4>
+                                    <img src={product.files[0]} className="w-full h-40 object-cover" alt="" />
+                                    <div className="px-5 py-2">
+                                        <h4 className="text-lg font-semibold">{product.title}</h4>
                                         <p className="text-sm text-gray-500">{product.city}, {product.state} ({product.pincode})</p>
                                         <p className="text-sm text-gray-500">Qty: {product.quantity}</p>
                                         <p className="text-sm text-gray-500">Status: <span className="text-green-500 capitalize font-medium">{product.status}</span></p>

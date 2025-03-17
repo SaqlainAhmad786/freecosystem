@@ -32,7 +32,7 @@ function Navbar() {
                 <nav className="customContainer navbar px-0 bg-base-100">
                     <div className="navbar-start">
                         <Link to="/">
-                            <img src="/images/logo.svg" className="h-16" alt="" />
+                            <img src="/images/logo.svg" className="h-14" alt="" />
                         </Link>
                     </div>
                     <div className="navbar-end w-full">
