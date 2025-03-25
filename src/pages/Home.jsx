@@ -9,6 +9,9 @@ import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
 import Aos from "aos";
 import "aos/dist/aos.css";
+import ProductCard from "../components/ProductCard/ProductCard";
+import ServiceCard from "../components/ServiceCard/ServiceCard";
+import JobCard from "../components/JobCard/JobCard";
 
 function Home() {
     const { productsList, servicesList, jobsList } = useAuth()
@@ -123,16 +126,7 @@ function Home() {
                             {productsList?.slice(0, 5)?.map((product, index) => {
                                 return (
                                     <SplideSlide key={index} className="flex justify-center items-center">
-                                        <Link to={`/productDetail/${product._id}`} className="bg-white inline-block border border-lightOrange rounded-lg overflow-hidden">
-                                            <img src={product.files[0]} className="w-full h-48 object-cover" alt="" />
-                                            <div className="px-5 py-3">
-                                                <h4 className="text-lg font-semibold mb-1">{product.title}</h4>
-                                                <p className="text-sm text-gray-500">{product.city}, {product.state} ({product.pincode})</p>
-                                                <p className="text-sm text-gray-500">Qty.: {product.quantity}</p>
-                                                <p className="text-sm text-gray-500">Status: <span className="text-green-500 capitalize font-medium">{product.status}</span></p>
-                                            </div>
-                                            <button className="btn-block bg-lightOrange hover:bg-orange duration-200 text-white font-medium text-sm py-2">Show Interest</button>
-                                        </Link>
+                                        <ProductCard product={product} />
                                     </SplideSlide>
                                 )
                             })}
@@ -150,16 +144,7 @@ function Home() {
                             {servicesList?.slice(0, 5)?.map((service, index) => {
                                 return (
                                     <SplideSlide key={index} className="flex justify-center items-center">
-                                        <Link to={`/serviceDetail/${service._id}`} className="bg-white inline-block border border-lightOrange rounded-lg overflow-hidden">
-                                            <img src={service.files[0]} className="w-full h-48 object-cover" alt="" />
-                                            <div className="px-5 py-3">
-                                                <h4 className="text-lg font-semibold mb-1">{service.title}</h4>
-                                                <p className="text-sm text-gray-500">{service.city}, {service.state} ({service.pincode})</p>
-                                                <p className="text-sm text-gray-500">{service.quantity}</p>
-                                                <p className="text-sm text-gray-500">Status: <span className="text-green-500 capitalize font-medium">{service.status}</span></p>
-                                            </div>
-                                            <button className="btn-block bg-lightOrange hover:bg-orange duration-200 text-white font-medium text-sm py-2">Show Interest</button>
-                                        </Link>
+                                        <ServiceCard service={service} />
                                     </SplideSlide>
                                 )
                             })}
@@ -176,17 +161,7 @@ function Home() {
                             {jobsList?.slice(0, 5)?.map((job, index) => {
                                 return (
                                     <SplideSlide key={index} className="flex justify-center items-center">
-                                        <Link className="w-72 bg-white inline-block border border-lightOrange rounded-lg overflow-hidden">
-                                            {/* <img src="/images/product1.jpg" className="w-full h-48 object-cover" alt="" /> */}
-                                            <div className="px-5 py-3">
-                                                <h4 className="text-lg font-semibold mb-1">{job.jobTitle}</h4>
-                                                <p className="text-sm text-gray-500">{job.city}, {job.state}, ({job.pincode})</p>
-                                                <p className="text-sm text-gray-500">Positions: {job.numberOfServices}</p>
-                                                <p className="text-md text-gray-700 font-medium mt-1">Company name</p>
-                                                <p className="text-sm text-gray-500">Status: <span className="text-green-500 capitalize font-medium">{job.status}</span></p>
-                                            </div>
-                                            <button className="btn-block bg-lightOrange hover:bg-orange duration-200 text-white font-medium text-sm py-2">Read more</button>
-                                        </Link>
+                                        <JobCard job={job} />
                                     </SplideSlide>
                                 )
                             })}

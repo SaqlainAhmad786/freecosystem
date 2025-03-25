@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar/Navbar"
 import Footer from "../components/Footer/Footer"
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { use } from "react";
 
 function ProductDetail() {
     const [productData, setProductData] = useState({});
@@ -24,7 +25,9 @@ function ProductDetail() {
             }
         }
         getProduct()
-    })
+    }, [id])
+
+    console.log(productData)
 
     const options = {
         type: 'fade',
@@ -68,28 +71,20 @@ function ProductDetail() {
                 <div className="customContainer bg-white px-3 mb-5 rounded-lg shadow-md grid md:grid-cols-2 gap-4">
                     <div className="grid gap-2 py-5">
                         <Splide options={options} ref={mainSliderRef} id="main-slider">
-                            <SplideSlide>
-                                <img src="/images/jobs-cover.jpg" alt="" />
-                            </SplideSlide>
-                            <SplideSlide>
-                                <img src="/images/services-cover.jpg" className="w-full h-full object-contain rounded-lg" alt="" />
-                            </SplideSlide>
-                            <SplideSlide>
-                                <img src="/images/product-cover.jpg" className="w-full h-full object-contain rounded-lg" alt="" />
-                            </SplideSlide>
+                            {productData?.files?.map((file, index) => (
+                                <SplideSlide key={index}>
+                                    <img src={file} className="w-full h-full object-contain rounded-lg" alt="" />
+                                </SplideSlide>
+                            ))}
                         </Splide>
                         <Splide options={options2} id="thumbnail-slider" ref={thumbSliderRef} onMounted={() => {
                             mainSliderRef.current.sync(thumbSliderRef.current.splide);
                         }}>
-                            <SplideSlide>
-                                <img src="/images/jobs-cover.jpg" className="w-full h-full object-cover rounded-lg" alt="" />
-                            </SplideSlide>
-                            <SplideSlide>
-                                <img src="/images/jobs-cover.jpg" className="w-full h-full object-cover rounded-lg" alt="" />
-                            </SplideSlide>
-                            <SplideSlide>
-                                <img src="/images/jobs-cover.jpg" className="w-full h-full object-cover rounded-lg" alt="" />
-                            </SplideSlide>
+                            {productData?.files?.map((file, index) => (
+                                <SplideSlide key={index}>
+                                    <img src={file} className="w-full h-full object-contain rounded-lg" alt="" />
+                                </SplideSlide>
+                            ))}
                         </Splide>
                     </div>
                     <div className="space-y-2 lg:p-5 md:p-5 p-2">
@@ -125,7 +120,7 @@ function ProductDetail() {
                             </li>
                             <li>
                                 <p className="text-sm text-gray-500">Sub-Category</p>
-                                <p>{productData.category}</p>
+                                <p>{productData.subCategory}</p>
                             </li>
                             <li>
                                 <p className="text-sm text-gray-500">Quantity</p>

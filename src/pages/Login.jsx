@@ -10,10 +10,12 @@ import Footer from "../components/Footer/Footer"
 function Login() {
     const { getUserData } = useAuth()
     const [showPassword, setShowPassword] = useState(false)
+    const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        setLoading(true)
         const formData = new FormData(e.target)
         const email = formData.get("email")
         const password = formData.get("password")
@@ -25,11 +27,13 @@ function Login() {
                 localStorage.setItem('token', res.data.token)
                 getUserData(res.data.token)
                 navigate('/')
+                setLoading(false)
             }
         } catch (error) {
             console.log(error);
             if (error.response.status === 401) {
                 toast.error(error.response.data.message)
+                setLoading(false)
             }
         }
     }
@@ -87,13 +91,10 @@ function Login() {
                                 type="submit"
                                 className="inline-block rounded-lg bg-lightOrange hover:bg-orange px-5 py-3 text-sm font-semibold duration-200 text-white"
                             >
-                                Sign in
+                                {loading ? <l-bouncy size="36" speed="1.75" color="white"></l-bouncy> : "Sign in"}
                             </button>
                         </div>
                     </form>
-                    <div className="text-sm flex justify-center mt-5">
-                        <Link to="/"><Home className="h-10 w-10 bg-gray-200 hover:bg-gray-300 duration-200 border rounded-box p-1" /></Link>
-                    </div>
                 </div>
             </section>
             <Footer />

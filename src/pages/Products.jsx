@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar/Navbar"
 import SignupBanner from "../components/SignupBanner/SignupBanner"
 import Footer from "../components/Footer/Footer"
 import { useAuth } from "../contexts/authContext"
+import ProductCard from "../components/ProductCard/ProductCard"
 
 function Products() {
     const { productsList } = useAuth();
@@ -43,16 +44,7 @@ function Products() {
                     <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 place-items-center gap-4 mb-8">
                         {productsList.map((product, index) => {
                             return (
-                                <Link key={index} to={`/productDetail/${product._id}`} className="bg-white max-w-[320px] inline-block border border-lightOrange rounded-lg overflow-hidden">
-                                    <img src={product.files[0]} className="w-full h-40 object-cover" alt="" />
-                                    <div className="px-5 py-2">
-                                        <h4 className="text-lg font-semibold">{product.title}</h4>
-                                        <p className="text-sm text-gray-500">{product.city}, {product.state} ({product.pincode})</p>
-                                        <p className="text-sm text-gray-500">Qty: {product.quantity}</p>
-                                        <p className="text-sm text-gray-500">Status: <span className="text-green-500 capitalize font-medium">{product.status}</span></p>
-                                    </div>
-                                    <button className="btn-block bg-lightOrange hover:bg-orange duration-200 text-white font-medium text-sm py-2">Show Interest</button>
-                                </Link>
+                                <ProductCard key={index} product={product} />
                             )
                         })}
 

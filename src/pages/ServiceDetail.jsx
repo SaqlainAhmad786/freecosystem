@@ -15,16 +15,17 @@ function ServiceDetail() {
     useEffect(() => {
         async function getService() {
             try {
-                const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/listings/product/${id}`)
+                const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/listings/service/${id}`)
                 if (res.status === 200) {
                     setServiceData(res.data.data);
+                    console.log(res.data.data);
                 }
             } catch (error) {
                 console.log(error);
             }
         }
         getService()
-    })
+    }, [id])
 
     const options = {
         type: 'fade',
@@ -68,49 +69,41 @@ function ServiceDetail() {
                 <div className="customContainer bg-white px-3 mb-5 rounded-lg shadow-md grid md:grid-cols-2 gap-4">
                     <div className="grid gap-2 py-5">
                         <Splide options={options} ref={mainSliderRef} id="main-slider">
-                            <SplideSlide>
-                                <img src="/images/jobs-cover.jpg" alt="" />
-                            </SplideSlide>
-                            <SplideSlide>
-                                <img src="/images/services-cover.jpg" className="w-full h-full object-contain rounded-lg" alt="" />
-                            </SplideSlide>
-                            <SplideSlide>
-                                <img src="/images/product-cover.jpg" className="w-full h-full object-contain rounded-lg" alt="" />
-                            </SplideSlide>
+                            {serviceData?.files?.map((file, index) => (
+                                <SplideSlide key={index}>
+                                    <img src={file} className="w-full h-full object-contain rounded-lg" alt="" />
+                                </SplideSlide>
+                            ))}
                         </Splide>
                         <Splide options={options2} id="thumbnail-slider" ref={thumbSliderRef} onMounted={() => {
                             mainSliderRef.current.sync(thumbSliderRef.current.splide);
                         }}>
-                            <SplideSlide>
-                                <img src="/images/jobs-cover.jpg" className="w-full h-full object-cover rounded-lg" alt="" />
-                            </SplideSlide>
-                            <SplideSlide>
-                                <img src="/images/jobs-cover.jpg" className="w-full h-full object-cover rounded-lg" alt="" />
-                            </SplideSlide>
-                            <SplideSlide>
-                                <img src="/images/jobs-cover.jpg" className="w-full h-full object-cover rounded-lg" alt="" />
-                            </SplideSlide>
+                            {serviceData?.files?.map((file, index) => (
+                                <SplideSlide key={index}>
+                                    <img src={file} className="w-full h-full object-contain rounded-lg" alt="" />
+                                </SplideSlide>
+                            ))}
                         </Splide>
                     </div>
                     <div className="space-y-2 lg:p-5 md:p-5 p-2">
-                        <p className="text-sm text-gray-500">Ad Id: <span className="font-semibold">123456</span></p>
-                        <h1 className="text-xl font-semibold">Service Name</h1>
+                        <p className="text-sm text-gray-500">Ad Id: <span className="font-semibold">{serviceData?._id}</span></p>
+                        <h1 className="text-xl font-semibold">{serviceData?.title}</h1>
                         <div>
                             <p className="text-xs font-medium text-gray-500">Description</p>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam modi incidunt voluptatibus maxime ad, magnam laboriosam sapiente a nam fugit, iste similique nobis. Earum, excepturi!</p>
+                            <p>{serviceData?.description}</p>
                         </div>
                         <ul className="list-disc list-outside grid grid-cols-2 pl-4 place-content-center">
                             <li>
                                 <p className="text-xs font-medium text-gray-500">Pincode</p>
-                                <p>111111</p>
+                                <p>{serviceData?.pincode}</p>
                             </li>
                             <li>
                                 <p className="text-xs font-medium text-gray-500">City</p>
-                                <p>Varanasi</p>
+                                <p>{serviceData?.city}</p>
                             </li>
                             <li>
                                 <p className="text-xs font-medium text-gray-500">State</p>
-                                <p>Uttar Pradesh</p>
+                                <p>{serviceData?.state}</p>
                             </li>
                             <li>
                                 <p className="text-xs font-medium text-gray-500">Country</p>
@@ -121,15 +114,15 @@ function ServiceDetail() {
                         <ul className="list-disc list-outside grid grid-cols-2 pl-4">
                             <li>
                                 <p className="text-sm text-gray-500">Category</p>
-                                <p>Product</p>
+                                <p>Service</p>
                             </li>
                             <li>
                                 <p className="text-sm text-gray-500">Sub-Category</p>
-                                <p>Accessories</p>
+                                <p>{serviceData?.subCategory}</p>
                             </li>
                             <li>
                                 <p className="text-sm text-gray-500">Services Offered</p>
-                                <p>1</p>
+                                <p>{serviceData?.numberOfServices}</p>
                             </li>
                         </ul>
                         <div>

@@ -12,8 +12,9 @@ function Signup() {
     const [state, setState] = useState([])
     const [city, setCity] = useState([])
     const [pincode, setPincode] = useState("")
-    const [loading, setLoading] = useState(false)
     const [timer, setTimer] = useState(null)
+    const [loading, setLoading] = useState(false)
+    const [mainLoading, setMainLoading] = useState(false)
     const navigate = useNavigate()
 
     const fetchPincodeData = async (value) => {
@@ -65,19 +66,21 @@ function Signup() {
         e.preventDefault()
         const formData = new FormData(e.target)
         const data = Object.fromEntries(formData)
-
+        setMainLoading(true)
         try {
             await axios.post(`${import.meta.env.VITE_BASE_URL}/auth/register`, data).then(res => {
                 console.log(res);
                 if (res.data.success) {
                     toast.success(res.data.message)
                     navigate('/verifyOtp', { state: { userId: res.data.userId, otp: res.data.otp } })
+                    setMainLoading(false)
                 }
             })
         } catch (error) {
             if (!error.response.data.success) {
                 toast.error(error.response.data.message, { description: 'Please try with different email.' })
             }
+            setMainLoading(false)
             console.log(error);
         }
     }
@@ -263,7 +266,7 @@ function Signup() {
                                 type="submit"
                                 className="inline-block rounded-lg bg-lightOrange hover:bg-orange px-5 py-3 text-sm font-semibold duration-200 text-white"
                             >
-                                Sign up
+                                {mainLoading ? <l-bouncy size="36" speed="1.75" color="white"></l-bouncy> : "Sign up"}
                             </button>
                         </div>
                     </form>

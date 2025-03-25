@@ -49,7 +49,6 @@ function Profile() {
                                         id="email"
                                     />
                                 </div>
-
                                 <div>
                                     <label className="sr-only" htmlFor="phone">Phone</label>
                                     <input
