@@ -4,6 +4,7 @@ import SignupBanner from "../components/SignupBanner/SignupBanner"
 import Footer from "../components/Footer/Footer"
 import { ChevronLeft, ChevronRight, Home } from "lucide-react"
 import { useAuth } from "../contexts/authContext"
+import ServiceCard from "../components/ServiceCard/ServiceCard"
 
 function Services() {
     const { servicesList } = useAuth()
@@ -43,16 +44,7 @@ function Services() {
                     <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 place-items-center gap-4 mb-8">
                         {servicesList.map((service, index) => {
                             return (
-                                <Link key={index} to={`/serviceDetail/${service._id}`} className="bg-white max-w-[320px] inline-block border border-lightOrange rounded-lg overflow-hidden">
-                                    <img src={service.files[0]} className="w-full h-40 object-cover" alt="" />
-                                    <div className="px-5 py-2">
-                                        <h4 className="text-lg font-semibold mb-1">{service.title}</h4>
-                                        <p className="text-sm text-gray-500">{service.city}, {service.state} ({service.pincode})</p>
-                                        <p className="text-sm text-gray-500">Qty: {service.numberOfServices}</p>
-                                        <p className="text-sm text-gray-500">Status: <span className="text-green-500 capitalize font-medium">{service.status}</span></p>
-                                    </div>
-                                    <button className="btn-block bg-lightOrange hover:bg-orange duration-200 text-white font-medium text-sm py-2">Show Interest</button>
-                                </Link>
+                                <ServiceCard key={index} service={service} />
                             )
                         })}
 

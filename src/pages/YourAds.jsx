@@ -243,7 +243,7 @@ function YourAds() {
                                                 alt=""
                                             />
                                             <div className="px-5 my-3">
-                                                <h4 className="text-lg font-semibold mb-1">
+                                                <h4 className="text-lg font-semibold mb-1 truncate">
                                                     {service.title}
                                                 </h4>
                                                 <p className="text-sm text-gray-500">

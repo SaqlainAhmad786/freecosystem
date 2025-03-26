@@ -1,22 +1,29 @@
-import { useParams } from "react-router-dom";
-import Footer from "../components/Footer/Footer";
-import Navbar from "../components/Navbar/Navbar";
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import Navbar from "../components/Navbar/Navbar";
+import Footer from "../components/Footer/Footer";
 import axios from "axios";
+import Loader from "../components/Loader/Loader";
+import { useAuth } from "../contexts/authContext";
 
 function JobDetails() {
+    const [loading, setLoading] = useState(false);
     const [jobData, setJobData] = useState({});
     const { id } = useParams();
+    const { userInterests } = useAuth();
 
     useEffect(() => {
         async function getProduct() {
+            setLoading(true);
             try {
                 const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/listings/job/${id}`)
                 if (res.status === 200) {
                     setJobData(res.data.data);
+                    setLoading(false);
                 }
             } catch (error) {
                 console.log(error);
+                setLoading(false);
             }
         }
         getProduct()
@@ -33,6 +40,7 @@ function JobDetails() {
 
     return (
         <>
+            {loading && <Loader />}
             <Navbar />
             <main>
                 <div className="customContainer my-2">
@@ -83,20 +91,25 @@ function JobDetails() {
                             </li>
                         </ul>
                         <div>
-                            <button className="w-full py-2 bg-lightOrange text-white rounded-lg" onClick={() => document.getElementById('my_modal_3').showModal()}>Show Interest</button>
-                            <dialog id="my_modal_3" className="modal">
-                                <div className="modal-box">
-                                    <form method="dialog">
-                                        <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-                                    </form>
-                                    <h3 className="font-bold text-lg">Are you sure?</h3>
-                                    <p className="py-4">You want to show interest in this profile</p>
-                                    <div className="modal-action">
-                                        <button className="btn" onClick={() => document.getElementById('my_modal_3').close()}>Cancel</button>
-                                        <button onClick={() => showInterst(jobData._id)} className="btn bg-lightOrange text-white hover:bg-orange">Show Interest</button>
-                                    </div>
-                                </div>
-                            </dialog>
+                            {userInterests.filter((interest) => interest.listing._id === jobData?._id).length > 0
+                                ? <button className="btn-block rounded-lg bg-orange duration-200 text-white font-medium text-sm py-2" disabled>Applied</button>
+                                : <>
+                                    <button className="w-full py-2 bg-lightOrange text-white rounded-lg" onClick={() => document.getElementById('my_modal_3').showModal()}>Apply to this Job</button>
+                                    <dialog id="my_modal_3" className="modal">
+                                        <div className="modal-box">
+                                            <form method="dialog">
+                                                <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                                            </form>
+                                            <h3 className="font-bold text-lg">Are you sure?</h3>
+                                            <p className="py-4">You want to show interest in this profile</p>
+                                            <div className="modal-action">
+                                                <button className="btn" onClick={() => document.getElementById('my_modal_3').close()}>Cancel</button>
+                                                <button onClick={() => showInterst(jobData._id)} className="btn bg-lightOrange text-white hover:bg-orange">Apply</button>
+                                            </div>
+                                        </div>
+                                    </dialog>
+                                </>
+                            }
                         </div>
                     </div>
                 </div>

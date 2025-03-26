@@ -12,6 +12,7 @@ import "aos/dist/aos.css";
 import ProductCard from "../components/ProductCard/ProductCard";
 import ServiceCard from "../components/ServiceCard/ServiceCard";
 import JobCard from "../components/JobCard/JobCard";
+import { Toaster } from "sonner";
 
 function Home() {
     const { productsList, servicesList, jobsList } = useAuth()
@@ -90,6 +91,7 @@ function Home() {
 
     return (
         <>
+            <Toaster />
             <Navbar />
             <main>
                 <HeroSection />

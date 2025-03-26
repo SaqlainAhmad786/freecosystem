@@ -1,11 +1,13 @@
+import { useAuth } from "../../contexts/authContext";
 import { Link } from "react-router-dom"
 import axios from "axios"
 
 function ProductCard({ product }) {
+    const { userInterests } = useAuth();
+
     async function showInterst(id) {
         try {
             const res = await axios.post(`${import.meta.env.VITE_BASE_URL}/interests`, { listingId: id, listingType: 'product', message: 'hello' }, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } });
-            console.log(res.data);
         } catch (error) {
             console.log(error);
         }
@@ -22,7 +24,10 @@ function ProductCard({ product }) {
                         <p className="text-sm text-gray-500">Status: <span className="text-green-500 capitalize font-medium">{product.status}</span></p>
                     </div>
                 </Link>
-                <button onClick={() => showInterst(product._id)} className="btn-block bg-lightOrange hover:bg-orange duration-200 text-white font-medium text-sm py-2">Show Interest</button>
+                {userInterests.filter((interest) => interest.listing._id === product._id).length > 0
+                    ? <button className="btn-block bg-orange duration-200 text-white font-medium text-sm py-2" disabled>Interest showned</button>
+                    : <button onClick={() => showInterst(product._id)} className="btn-block bg-lightOrange hover:bg-orange duration-200 text-white font-medium text-sm py-2">Show Interest</button>
+                }
             </div>
         </>
     )
