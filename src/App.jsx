@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { AuthProvider } from "./contexts/authContext";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -23,6 +23,9 @@ import Interests from "./pages/Interests";
 import LoggedIn from "./components/LoggedIn/LoggedIn";
 import NotLoggedIn from "./components/NotLoggedIn/NotLoggedIn";
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
+import Admin from "./pages/Admin";
+import Dashboard from "./components/Admin/Dashboard";
+import Ads from "./components/Admin/Ads";
 
 function App() {
 	return (
@@ -50,6 +53,11 @@ function App() {
 						<Route path="/editProduct/:productId" element={<NotLoggedIn Component={EditProduct} />} />
 						<Route path="/editService/:serviceId" element={<NotLoggedIn Component={EditService} />} />
 						<Route path="/editJob/:jobId" element={<NotLoggedIn Component={EditJob} />} />
+						<Route path="/admin" element={<Admin />}>
+							<Route index element={<Navigate to="dashboard" />} />
+							<Route path="dashboard" element={<Dashboard />} />
+							<Route path="ads" element={<Ads />} />
+						</Route>
 						<Route path="*" element={<Page404 />} />
 					</Routes>
 				</BrowserRouter>
