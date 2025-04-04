@@ -1,4 +1,4 @@
-import { CircleGauge, Menu, Table2 } from "lucide-react"
+import { CircleGauge, Menu, Table2, Users } from "lucide-react"
 import { NavLink, Outlet } from "react-router-dom"
 
 function Admin() {
@@ -25,7 +25,10 @@ function Admin() {
                                 <CircleGauge className="w-5 h-5 me-1 text-orange" />Dashboard</NavLink>
                             </li>
                             <li className="hover:translate-x-2 duration-200"><NavLink to={'ads'} className="text-lg">
-                                <Table2 className="w-5 h-5 me-1 text-orange" />Ads                            </NavLink>
+                                <Table2 className="w-5 h-5 me-1 text-orange" />Ads</NavLink>
+                            </li>
+                            <li className="hover:translate-x-2 duration-200"><NavLink to={'users'} className="text-lg">
+                                <Users className="w-5 h-5 me-1 text-orange" />Users</NavLink>
                             </li>
                         </ul>
                     </div>

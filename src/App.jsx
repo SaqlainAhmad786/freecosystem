@@ -26,6 +26,7 @@ import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 import Admin from "./pages/Admin";
 import Dashboard from "./components/Admin/Dashboard";
 import Ads from "./components/Admin/Ads";
+import Users from "./components/Admin/Users";
 
 function App() {
 	return (
@@ -57,6 +58,7 @@ function App() {
 							<Route index element={<Navigate to="dashboard" />} />
 							<Route path="dashboard" element={<Dashboard />} />
 							<Route path="ads" element={<Ads />} />
+							<Route path="users" element={<Users />} />
 						</Route>
 						<Route path="*" element={<Page404 />} />
 					</Routes>
